@@ -9,6 +9,7 @@ eval(['run ' pwd '/SI_consts.m']);
 
 % specify template
 rpinput_template_file = [pwd '/rpinputs/rpinput_template'];
+%rpinput_template_file = ['~/rpinputs/rpinput_template'];
 
 % specify output
 datestr = date;
@@ -17,12 +18,13 @@ datestr = date;
 [year, eonstr]   = strtok(yearstr,'-');
 
 rpinput_dir = [pwd '/rpinputs/' year '/' month '/' day '/'];
+%rpinput_dir = ['~/rpinputs/' year '/' month '/' day '/'];
 if ~exist(rpinput_dir,'dir')
     mkdir([rpinput_dir]);
 end
 
 % CHANGE ME!!!!!!!!!!!!!!
-rpinput_output_name = 'test1';
+rpinput_output_name = 'IND8_NP512';
 
 rpinput_output_file = [rpinput_dir 'rpinput_' rpinput_output_name];
 
@@ -39,19 +41,19 @@ end
 % INPUT TO RPINPUT
 
 % plasma parameters
-input_struct.plasma_density = 1e17;      % /cm^3
+input_struct.plasma_density = 1e16;      % /cm^3
 input_struct.plasma_PREION  = 1;           % 0 : non-ionized plasma 1: pre-ionized plasma
 input_struct.plasma_Z       = 3;           % atomic number of plasma gas
 
 % beam parameters
 input_struct.charge         = +1.0;         % -1 for electron, +1 for positron
 input_struct.mass           = SI_eM/SI_eM; % Particle mass in units of electron mass
-input_struct.N_particles    = 2.0e10;        % Number of beam particles
+input_struct.N_particles    = 3.0e10;        % Number of beam particles
 input_struct.gamma          = 0;           % relativistic factor gamma, if 0 energy specified below
 input_struct.energy         = 20.35;          % beam mean energy [GeV], if 0 use gamma to calculate energy
-input_struct.sigma_x        = 60;        % Gaussian sigma_x [um]
-input_struct.sigma_y        = 60;        % Gaussian sigma_y [um]
-input_struct.sigma_z        = 14.;        % Gaussian sigma_z [um]
+input_struct.sigma_x        = 50;        % Gaussian sigma_x [um]
+input_struct.sigma_y        = 50;        % Gaussian sigma_y [um]
+input_struct.sigma_z        = 25.;        % Gaussian sigma_z [um]
 input_struct.emit_x         = 50.0;        % normalized X emittance [mm*mrad i.e. 1e-6]
 input_struct.emit_y         = 50.0;         % normalized Y emittance [mm*mrad i.e. 1e-6]
 input_struct.beam_match     = 0;           % 1: override sigma_x, sigma_y with matched counterparts, 0: do nothing
@@ -63,8 +65,8 @@ input_struct.BEAM_EV        = 0;           % 0 : calc wake only, 1 : propagate a
 input_struct.plasma_s_prop  = 1.0;         % propagation length of the beam [m]
 input_struct.N_wavelengths  = 5;           % set box length by number of plasma wavelengths
 input_struct.N_bunchlengths = 10;          % set box length by bunch lengths, box length will be larger of two options
-input_struct.N_bubbleradius = 10.0;        % set box width by number of bubble radii
-input_struct.N_bunchradius  = 10.0;        % set box width by number of bunch radii, box width will be larger of two options
+input_struct.N_bubbleradius = 8.0;        % set box width by number of bubble radii
+input_struct.N_bunchradius  = 8.0;        % set box width by number of bunch radii, box width will be larger of two options
 input_struct.x_frac         = 0.5;         % place bunch as fraction of box width, 0 at start of box, 1 at end
 input_struct.y_frac         = 0.5;         % place bunch as fraction of box width, 0 at start of box, 1 at end
 input_struct.z_frac         = 0.20;        % place bunch as fraction of box length, 0 at start of box, 1 at end
@@ -81,4 +83,4 @@ input_struct.store_QEB_3D   = 0;           % store full 3D beam phase space?
 
 % RPINPUT WRITER
 WRITE_RP(rpinput_template_file, rpinput_output_file, output_struct);
-%exit;
+exit;
