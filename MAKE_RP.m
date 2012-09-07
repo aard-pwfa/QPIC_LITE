@@ -25,7 +25,7 @@ if ~exist(param_dir,'dir')
     mkdir(param_dir);
 end
 
-rpinput_output_name = 'test2';
+rpinput_output_name = 'test3';
 rpinput_output_file = [rpinput_dir 'rpinput_' rpinput_output_name];
 
 write = 1;
@@ -90,4 +90,4 @@ if write
     WRITE_RP(rpinput_template_file, rpinput_output_file, param_struct);
     save([param_dir 'param_' rpinput_output_name '.mat'], 'param_struct');
 end
-%exit;
+exit;
