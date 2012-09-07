@@ -35,20 +35,49 @@ output_struct.omega_b = sqrt(output_struct.plasma_density*1e6*SI_e^2/...
     (2*output_struct.gamma*input_struct.mass*SI_em*SI_eps0));
 output_struct.lambda_b = 2*pi*SI_c*1e6/output_struct.omega_b;
 
+% % Calc beam size if beam_match == 1
+% if( input_struct.beam_match )
+%   output_struct.sigma_x = 1e3*sqrt(input_struct.emit_x/output_struct.k_p*sqrt(2/output_struct.gamma)); % [um]
+%   output_struct.sigma_y = 1e3*sqrt(input_struct.emit_y/output_struct.k_p*sqrt(2/output_struct.gamma)); % [um]
+%   output_struct.emit_x  = input_struct.emit_x; % [mm*mrad]
+%   output_struct.emit_y  = input_struct.emit_x; % [mm*mrad]
+% end
+% 
+% % Calc emittance if emit_match == 1
+% if( input_struct.emit_match )
+%   output_struct.emit_x  = 1e-6*output_struct.k_p*(input_struct.sigma_x)^2*sqrt(output_struct.gamma/2); % [mm*mrad]
+%   output_struct.emit_y  = 1e-6*output_struct.k_p*(input_struct.sigma_y)^2*sqrt(output_struct.gamma/2); % [mm*mrad]
+%   output_struct.sigma_x = input_struct.sigma_x; % [um]
+%   output_struct.sigma_y = input_struct.sigma_y; % [um]
+% end
+
 % Calc beam size if beam_match == 1
 if( input_struct.beam_match )
-  output_struct.sigma_x = 1e3*sqrt(input_struct.emit_x/output_struct.k_p*sqrt(2/output_struct.gamma)); % [um]
-  output_struct.sigma_y = 1e3*sqrt(input_struct.emit_y/output_struct.k_p*sqrt(2/output_struct.gamma)); % [um]
-  output_struct.emit_x  = input_struct.emit_x; % [mm*mrad]
-  output_struct.emit_y  = input_struct.emit_x; % [mm*mrad]
-end
+  output_struct.sigma_x = 1e3*sqrt(input_struct.emit_x/...
+      output_struct.k_p*sqrt(2/output_struct.gamma));      % beam size X [um]
+  
+  output_struct.sigma_y = 1e3*sqrt(input_struct.beam.emit_y/...
+      output_struct.k_p*sqrt(2/output_struct.gamma));      % beam size Y [um]
+  
+  output_struct.emit_x  = input_struct.emit_x;              % beam norm X emmitance [mm*mrad]
+  output_struct.emit_y  = input_struct.emit_x;              % beam norm Y emmitance [mm*mrad]
 
 % Calc emittance if emit_match == 1
-if( input_struct.emit_match )
-  output_struct.emit_x  = 1e-6*output_struct.k_p*(input_struct.sigma_x)^2*sqrt(output_struct.gamma/2); % [mm*mrad]
-  output_struct.emit_y  = 1e-6*output_struct.k_p*(input_struct.sigma_y)^2*sqrt(output_struct.gamma/2); % [mm*mrad]
-  output_struct.sigma_x = input_struct.sigma_x; % [um]
-  output_struct.sigma_y = input_struct.sigma_y; % [um]
+elseif( input_struct.emit_match )
+  output_struct.emit_x  = 1e-6*output_struct.k_p*...
+      (input_struct.sigma_x)^2*sqrt(output_struct.gamma/2); % beam norm X emmitance [mm*mrad]
+  output_struct.emit_y  = 1e-6*output_struct.k_p*...
+      (input_struct.sigma_y)^2*sqrt(output_struct.gamma/2); % beam norm Y emmitance [mm*mrad]
+  
+  output_struct.sigma_x = input_struct.sigma_x;             % beam size X [um]
+  output_struct.sigma_y = input_struct.sigma_y;             % beam size Y [um]
+
+else
+  output_struct.sigma_x = input_struct.sigma_x;             % beam size X [um]
+  output_struct.sigma_y = input_struct.sigma_y;             % beam size Y [um]
+  
+  output_struct.emit_x  = input_struct.emit_x;              % beam norm X emmitance [mm*mrad]
+  output_struct.emit_y  = input_struct.emit_x;              % beam norm Y emmitance [mm*mrad]
 end
 
 % Calc sigma_z if z_match == 1
