@@ -25,7 +25,7 @@ if ~exist(param_dir,'dir')
     mkdir(param_dir);
 end
 
-rpinput_output_name = 'pShort_2step';
+rpinput_output_name = 'test2';
 rpinput_output_file = [rpinput_dir 'rpinput_' rpinput_output_name];
 
 write = 1;
@@ -45,6 +45,7 @@ end
 input_struct.sim.BEAM_EV       = 1;           % 0 : calc wake only, 1 : propagate and evolve beam
 input_struct.sim.prop          = 0.000768;         % propagation length of the beam [m]
 input_struct.sim.DT            = 16.0;        % Delta T between beam pushes [1/omega_p]. If 0: use calc from formula
+input_struct.sim.dump_freq     = 1;           % Dump frequency
 
 % plasma parameters
 input_struct.plasma.density    = 5e16;        % /cm^3
@@ -91,4 +92,4 @@ if write
     WRITE_RP(rpinput_template_file, rpinput_output_file, param_struct);
     save([param_dir 'param_' rpinput_output_name '.mat'], 'param_struct');
 end
-exit;
+%exit;

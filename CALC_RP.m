@@ -192,7 +192,7 @@ end
 
 if( input_struct.sim.BEAM_EV )
   param_struct.time.TEND       = floor(input_struct.sim.prop / (SI_c / param_struct.plasma.omega_p))+0.1;
-  param_struct.time.DT_OUTPUT  = 10; % output data every n'th timestep
+  param_struct.time.DT_OUTPUT  = input_struct.sim.dump_freq; % output data every n'th timestep
   param_struct.time.DT_RESTART = param_struct.time.DT_OUTPUT*4;
 else
   param_struct.time.TEND       = param_struct.time.DT+0.1;
