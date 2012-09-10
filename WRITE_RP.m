@@ -110,7 +110,7 @@ while( row ~= -1 )
 
     % STAGES SECTION
     if( ~isempty(strfind(row, 'Num_Stages') ) && section_pipeline == 1)
-       fprintf(fidout, [' Num_Stages = ' num2str(1) '\n']  );
+       fprintf(fidout, [' Num_Stages = ' num2str(input_struct.comp.num_stages) '\n']  );
 
     % SIMSYS SECTION
     elseif( ~isempty(strfind(row, 'Box_X') ) && section_simsys == 1)

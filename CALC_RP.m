@@ -184,7 +184,12 @@ param_struct.size.Frac_Z = param_struct.size.Cell_Z/param_struct.plasma.SD;
 %%%%%%%%%%%%%%%%%%%
 
 % Determine slice time
-param_struct.time.DT = round(sqrt(2*param_struct.beam.gamma)/10 / 1.5); % 1.5 is deceleration factor
+if input_struct.sim.DT == 0
+    param_struct.time.DT = round(sqrt(2*param_struct.beam.gamma)/10 / 1.5); % 1.5 is deceleration factor
+else
+    param_struct.time.DT = input_struct.sim.DT;
+end
+
 if( input_struct.sim.BEAM_EV )
   param_struct.time.TEND       = floor(input_struct.sim.prop / (SI_c / param_struct.plasma.omega_p))+0.1;
   param_struct.time.DT_OUTPUT  = 10; % output data every n'th timestep
@@ -209,7 +214,15 @@ param_struct.pos.Z_center = round(param_struct.size.Box_Z*input_struct.size.Z_ce
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
-% Diagnostic ATTRIBUTES %
+% DIAGNOSTIC ATTRIBUTES %
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
-param_struct.diag.store_QEB_3D  = input_struct.diag.store_QEB_3D;
+param_struct.diag.store_QEB_3D = input_struct.diag.store_QEB_3D;
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% COMPUTATIONAL ATTRIBUTES %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+param_struct.comp.num_stages = input_struct.sim.BEAM_EV+1;
