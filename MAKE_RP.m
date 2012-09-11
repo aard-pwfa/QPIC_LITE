@@ -97,7 +97,7 @@ param_struct = CALC_RP(input_struct);
 if write
     WRITE_RP(rpinput_template_file, rpinput_output_file, param_struct);
     save([param_dir 'param_' rpinput_output_name '.mat'], 'param_struct');
-    WRITE_CMD(command_dir, rpinput_output_name, param_struct.comp.mem,...
+    run_dir = WRITE_CMD(command_dir, rpinput_output_name, param_struct.comp.mem,...
         param_struct.comp.tasks, param_struct.comp.run_time);
 end
 

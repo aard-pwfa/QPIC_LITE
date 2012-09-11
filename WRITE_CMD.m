@@ -1,4 +1,4 @@
-function WRITE_CMD(cmd_dir, name,memory,tasks,run_time)
+function run_dir = WRITE_CMD(cmd_dir, name,memory,tasks,run_time)
 
 %Command file
 myfileout = [cmd_dir 'qpic.e.cmd_' name];
