@@ -14,23 +14,24 @@ datestr = date;
 [day, monthstr]  = strtok(datestr,'-');
 [month, yearstr] = strtok(monthstr,'-');
 [year, eonstr]   = strtok(yearstr,'-');
+date_dir = [year '/' month '/' day '/'];
 
-rpinput_dir = [pwd '/rpinputs/' year '/' month '/' day '/'];
+rpinput_dir = [pwd '/rpinputs/' date_dir];
 if ~exist(rpinput_dir,'dir')
     mkdir(rpinput_dir);
 end
 
-param_dir = [pwd '/params/' year '/' month '/' day '/'];
+param_dir = [pwd '/params/' date_dir];
 if ~exist(param_dir,'dir')
     mkdir(param_dir);
 end
 
-command_dir = [pwd '/commands/' year '/' month '/' day '/'];
+command_dir = [pwd '/commands/' date_dir];
 if ~exist(command_dir,'dir')
     mkdir(command_dir);
 end
 
-rpinput_output_name = 'PtwoDump';
+rpinput_output_name = '2DumpPosi';
 rpinput_output_file = [rpinput_dir 'rpinput_' rpinput_output_name];
 
 write = 1;

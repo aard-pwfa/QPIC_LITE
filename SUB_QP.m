@@ -1,7 +1,17 @@
 clear all;
 
-MAKE_RP;
 d = pwd;
-cd('/usr');
-ls
+
+MAKE_RP;
+
+cd('/u/scratch/s/sgess');
+stat = mkdir(rpinput_output_name);
+cd(rpinput_output_name);
+copyfile('/u/home/mori/sgess/executables/QuickPIC/qpic.e.twiss.0907','qpic.e');
+copyfile([d '/rpinputs/' date_dir 'rpinput_' rpinput_output_name],'rpinput');
+copyfile([d '/commands/' date_dir 'qpic.e.cmd_' rpinput_output_name],'qpic.e.cmd');
+
+unix('qsub qpic.e.cmd','-echo');
+
 cd(d);
+exit;
