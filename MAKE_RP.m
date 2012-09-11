@@ -1,10 +1,10 @@
 % QuickPIC Matlab rpinput generation example script
 % S. Gessner Sep 07, 2012
 
-clear all;
+%clear all;
 
 % import standard SI constants
-eval(['run ' pwd '/SI_consts.m']);
+SI_consts;
 
 % specify template
 rpinput_template_file = [pwd '/rpinputs/rpinput_template'];
@@ -23,6 +23,11 @@ end
 param_dir = [pwd '/params/' year '/' month '/' day '/'];
 if ~exist(param_dir,'dir')
     mkdir(param_dir);
+end
+
+command_dir = [pwd '/commands/' year '/' month '/' day '/'];
+if ~exist(command_dir,'dir')
+    mkdir(command_dir);
 end
 
 rpinput_output_name = 'PtwoDump';
@@ -46,6 +51,7 @@ input_struct.sim.BEAM_EV       = 1;           % 0 : calc wake only, 1 : propagat
 input_struct.sim.prop          = 0.000768;         % propagation length of the beam [m]
 input_struct.sim.DT            = 16.0;        % Delta T between beam pushes [1/omega_p]. If 0: use calc from formula
 input_struct.sim.dump_freq     = 1;           % Dump frequency
+input_struct.sim.run_time      = 1;           % Amount of computer time to run sim for, 1 if BEAM_EV = 0
 
 % plasma parameters
 input_struct.plasma.density    = 5e16;        % /cm^3
@@ -91,5 +97,8 @@ param_struct = CALC_RP(input_struct);
 if write
     WRITE_RP(rpinput_template_file, rpinput_output_file, param_struct);
     save([param_dir 'param_' rpinput_output_name '.mat'], 'param_struct');
+    WRITE_CMD(command_dir, rpinput_output_name, param_struct.comp.mem,...
+        param_struct.comp.tasks, param_struct.comp.run_time);
 end
-exit;
+
+%exit;

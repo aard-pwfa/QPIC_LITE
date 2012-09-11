@@ -225,4 +225,14 @@ param_struct.diag.store_QEB_3D = input_struct.diag.store_QEB_3D;
 % COMPUTATIONAL ATTRIBUTES %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-param_struct.comp.num_stages = input_struct.sim.BEAM_EV+1;
+if input_struct.sim.BEAM_EV == 0
+    param_struct.comp.num_stages = 1;
+    param_struct.comp.run_time   = 1;
+    param_struct.comp.mem        = 1024;
+    param_struct.comp.tasks      = 8;
+elseif input_struct.sim.BEAM_EV == 1
+    param_struct.comp.num_stages = 2;
+    param_struct.comp.run_time   = input_struct.sim.run_time;
+    param_struct.comp.mem        = 4096;
+    param_struct.comp.tasks      = 128;
+end
