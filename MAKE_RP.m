@@ -31,7 +31,7 @@ if ~exist(command_dir,'dir')
     mkdir(command_dir);
 end
 
-rpinput_output_name = '2DumpPosi';
+rpinput_output_name = 'cmdTest';
 rpinput_output_file = [rpinput_dir 'rpinput_' rpinput_output_name];
 
 write = 1;
