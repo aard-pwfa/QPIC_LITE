@@ -31,7 +31,7 @@ if ~exist(command_dir,'dir')
     mkdir(command_dir);
 end
 
-rpinput_output_name = 'cmdTest2';
+rpinput_output_name = 'cmdTest3';
 rpinput_output_file = [rpinput_dir 'rpinput_' rpinput_output_name];
 
 write = 1;
