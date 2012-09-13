@@ -10,11 +10,7 @@ SI_consts;
 rpinput_template_file = [pwd '/rpinputs/rpinput_template'];
 
 % specify output
-datestr = date;
-[day, monthstr]  = strtok(datestr,'-');
-[month, yearstr] = strtok(monthstr,'-');
-[year, eonstr]   = strtok(yearstr,'-');
-date_dir = [year '/' month '/' day '/'];
+date_dir = GET_DATE_DIR;
 
 rpinput_dir = [pwd '/rpinputs/' date_dir];
 if ~exist(rpinput_dir,'dir')
@@ -39,8 +35,8 @@ write = 1;
 if exist(rpinput_output_file,'file')
    reply = input(['File ' rpinput_output_file ' exists. \n Do you want to overwrite? y/n '], 's');
    if (strcmp(reply,'n'))
-      disp('Ok. Forget it.');
-      return;
+      disp('Ok. That''s cool.');
+      write = 0;
    end
 end
 
@@ -55,7 +51,7 @@ input_struct.sim.dump_freq     = 1;           % Dump frequency
 input_struct.sim.run_time      = 1;           % Amount of computer time to run sim for, 1 if BEAM_EV = 0
 
 % plasma parameters
-input_struct.plasma.density    = 5e16;        % /cm^3
+input_struct.plasma.density    = 3e17;        % /cm^3
 input_struct.plasma.charge     = -1.0;        % -1 for electron, +1 for positron
 input_struct.plasma.mass       = SI_eM/SI_eM; % Particle mass in units of electron mass
 input_struct.plasma.PREION     = 1;           % 0 : non-ionized plasma 1: pre-ionized plasma
