@@ -191,7 +191,7 @@ if param_struct.plasma.profile == 1
     param_struct.plasma.width   = input_struct.plasma.width;   % annulus width
     
     % Calc plasma profile
-    param_struct.plasma.r = linspace(0,param_struct.size.Box_X,param_struct.plasma.n_point); % N radial points
+    param_struct.plasma.r = linspace(0,floor(param_struct.size.Box_X/2),param_struct.plasma.n_point); % N radial points
     %param_struct.plasma.n = param_struct.plasma.density * ...
         %exp(-(param_struct.plasma.r - param_struct.plasma.radius).^2/(2*param_struct.plasma.width^2)); % radial density
     param_struct.plasma.n = exp(-(param_struct.plasma.r - param_struct.plasma.radius).^2/(2*param_struct.plasma.width^2));
