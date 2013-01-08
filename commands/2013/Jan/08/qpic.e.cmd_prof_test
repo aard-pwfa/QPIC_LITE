@@ -1,7 +1,7 @@
 #!/bin/csh -f
 #  qpic.e.cmd
 #
-#  UGE job for qpic.e built Tue Jan 08 01:38:42 PDT 2013
+#  UGE job for qpic.e built Tue Jan 08 01:38:07 PDT 2013
 #
 #  The following items pertain to this script
 #  Use current working directory
@@ -46,7 +46,7 @@
   source /u/local/bin/qq.sge/qr.runtime
   if ($status != 0) exit (1)
 #
-  echo "UGE job for qpic.e built Tue Jan 08 01:38:42 PDT 2013"
+  echo "UGE job for qpic.e built Tue Jan 08 01:38:07 PDT 2013"
   echo ""
   echo "  qpic.e directory:"
   echo "    "/u/scratch/s/sgess/prof_test
