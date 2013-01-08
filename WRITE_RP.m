@@ -205,16 +205,16 @@ while( row ~= -1 )
           fprintf(fidout, [' Prof_Nsec = ' num2str( input_struct.plasma.n_point) '\n'] );
       elseif( ~isempty(strfind(row, 'Prof_Parameter(1,') ) && section_species == 1)
           fprintf(fidout, [' Prof_Parameter(1,1:' num2str(input_struct.plasma.n_point) ') = '] );
-          for i=1:input_struct.plasma.n_point
-              fprintf(fidout, [num2str(input_struct.plasma.n(i),'%.2G') ',']);
+          for i=1:(input_struct.plasma.n_point-1)
+              fprintf(fidout, [num2str(input_struct.plasma.n(i),'%.2f') ',']);
           end
-          fprintf(fidout,'\n');
+          fprintf(fidout,[num2str(input_struct.plasma.n(input_struct.plasma.n_point),'%.2f') '\n']);
       elseif( ~isempty(strfind(row, 'Prof_Parameter(2,') ) && section_species == 1)
           fprintf(fidout, [' Prof_Parameter(2,1:' num2str(input_struct.plasma.n_point) ') = '] );
-          for i=1:input_struct.plasma.n_point
+          for i=1:(input_struct.plasma.n_point-1)
               fprintf(fidout, [num2str(input_struct.plasma.r(i),'%.2f') ',']);
           end
-          fprintf(fidout,'\n');
+          fprintf(fidout,[num2str(input_struct.plasma.r(input_struct.plasma.n_point),'%.2f') '\n']);
 
       % NEUTRAL SECTION
       elseif( ~isempty(strfind(row, 'Neutral_gas') ) && section_neutral == 1)
