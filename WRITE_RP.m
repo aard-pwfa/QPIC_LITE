@@ -125,7 +125,7 @@ while( row ~= -1 )
     % BEAM SECTION(S)
     elseif( section_beam == 1)
        %for(n_beam=1:N_beams),
-          fprintf(fidout, ['\n']  );
+          fprintf(fidout, '\n'  );
           fprintf(fidout, ['&Beam' '\n']  );
           fprintf(fidout, [' BEAM_EVOLUTION = .true.' '\n']  );
           fprintf(fidout, [' MIN_BEAM_PARTICLE = 8' '\n']  );
@@ -187,15 +187,39 @@ while( row ~= -1 )
             fprintf(fidout, [' Nneutrals=1' '\n']  );
          end% if
 
-      % NEUTRAL SECTION
-      elseif( ~isempty(strfind(row, 'Neutral_gas') ) && section_neutral == 1)
-         fprintf(fidout, [' Neutral_gas = ' num2str(input_struct.plasma.Z) '\n']  );
-
       % SPECIES SECTION 
       elseif( ~isempty(strfind(row, 'NP2') ) && section_species == 1)
          n_plasma_particles_per_cell = 4; % form UCLA
          fprintf(fidout, [' NP2 = ' num2str(round(sqrt((2^input_struct.size.INDX)^2 * n_plasma_particles_per_cell))) '\n']  );
+      elseif( ~isempty(strfind(row, 'Charge') ) && section_species == 1)
+         fprintf(fidout, [' Charge = ' num2str( input_struct.plasma.charge, '%.1f') '\n'] );
+      elseif( ~isempty(strfind(row, 'Mass') ) && section_species == 1)
+         fprintf(fidout, [' Mass = ' num2str( input_struct.plasma.mass, '%.1f') '\n'] );
+      elseif( ~isempty(strfind(row, 'Profile_type') ) && section_species == 1)
+          if input_struct.plasma.profile == 0
+              fprintf(fidout, ' Profile_type=0 \n' );
+          elseif input_struct.plasma.profile == 1
+              fprintf(fidout, ' Profile_type=21 \n' );
+          end
+      elseif( ~isempty(strfind(row, 'Prof_Nsec') ) && section_species == 1)
+          fprintf(fidout, [' Prof_Nsec = ' num2str( input_struct.plasma.n_point) '\n'] );
+      elseif( ~isempty(strfind(row, 'Prof_Parameter(1,') ) && section_species == 1)
+          fprintf(fidout, [' Prof_Parameter(1,1:' num2str(input_struct.plasma.n_point) ') = '] );
+          for i=1:input_struct.plasma.n_point
+              fprintf(fidout, [num2str(input_struct.plasma.n(i),'%.2G') ',']);
+          end
+          fprintf(fidout,'\n');
+      elseif( ~isempty(strfind(row, 'Prof_Parameter(2,') ) && section_species == 1)
+          fprintf(fidout, [' Prof_Parameter(2,1:' num2str(input_struct.plasma.n_point) ') = '] );
+          for i=1:input_struct.plasma.n_point
+              fprintf(fidout, [num2str(input_struct.plasma.r(i),'%.2f') ',']);
+          end
+          fprintf(fidout,'\n');
 
+      % NEUTRAL SECTION
+      elseif( ~isempty(strfind(row, 'Neutral_gas') ) && section_neutral == 1)
+         fprintf(fidout, [' Neutral_gas = ' num2str(input_struct.plasma.Z) '\n']  );
+         
       % SIMTIME SECTION
       elseif( ~isempty(strfind(row, 'TEND') ) && section_simtime == 1) 
          TEND_str = num2str(input_struct.time.TEND, '%10G');

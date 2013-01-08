@@ -12,8 +12,9 @@ eval(['run ' pwd '/SI_consts.m']);
 param_struct.plasma.density  = input_struct.plasma.density; % plasma density [cm^-3]
 param_struct.plasma.charge   = input_struct.plasma.charge;  % plasma particle charge [e]
 param_struct.plasma.mass     = input_struct.plasma.mass;    % plasma particle mass [e_m]
-param_struct.plasma.PREION   = input_struct.plasma.PREION;  % 0 : non-ionized plasma 1: pre-ionized plasma
+param_struct.plasma.PREION   = input_struct.plasma.PREION;  % 0: non-ionized plasma, 1: pre-ionized plasma
 param_struct.plasma.Z        = input_struct.plasma.Z;       % ion number
+param_struct.plasma.profile  = input_struct.plasma.profile; % 0: uniform plasma, 1: hollow channel plasma
 
 % Calc plasma parameters
 param_struct.plasma.omega_p  = sqrt(param_struct.plasma.density*...
@@ -179,6 +180,22 @@ param_struct.size.Frac_Y = param_struct.size.Cell_Y/param_struct.plasma.SD;
 param_struct.size.Frac_Z = param_struct.size.Cell_Z/param_struct.plasma.SD;
 
 
+
+%%%%%%%%%%%%%%%%%%
+% PLASMA PROFILE %
+%%%%%%%%%%%%%%%%%%
+
+if param_struct.plasma.profile == 1    
+    param_struct.plasma.n_point = input_struct.plasma.n_point; % number of points used to define channel
+    param_struct.plasma.radius  = input_struct.plasma.radius;  % channel radius
+    param_struct.plasma.width   = input_struct.plasma.width;   % annulus width
+    
+    % Calc plasma profile
+    param_struct.plasma.r = linspace(0,param_struct.size.Box_X,param_struct.plasma.n_point); % N radial points
+    param_struct.plasma.n = param_struct.plasma.density * ...
+        exp(-(param_struct.plasma.r - param_struct.plasma.radius).^2/(2*param_struct.plasma.width^2)); % radial density
+    param_struct.plasma.n = param_struct.plasma.n .* (param_struct.plasma.n > 1);
+end
 
 %%%%%%%%%%%%%%%%%%%
 % TIME ATTRIBUTES %
