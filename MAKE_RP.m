@@ -84,7 +84,7 @@ input_struct.beam.z_match      = 0;           % 1: override sigma_z with sqrt(2)
 % size parameters
 input_struct.size.Z_waves      = 2.;          % set box length by number of plasma wavelengths
 input_struct.size.Z_bunches    = 0;           % set box length by bunch lengths
-input_struct.size.X_bubbles    = 10;           % set box width by number of bubble radii
+input_struct.size.X_bubbles    = 10;          % set box width by number of bubble radii
 input_struct.size.X_bunches    = 0.0;         % set box width by number of bunch radii
 input_struct.size.X_center     = 0.5;         % place bunch as fraction of box width, 0 at start of box, 1 at end
 input_struct.size.Y_center     = 0.5;         % place bunch as fraction of box width, 0 at start of box, 1 at end
