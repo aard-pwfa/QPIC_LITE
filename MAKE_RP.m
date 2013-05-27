@@ -69,7 +69,7 @@ input_struct.size.z_grain      = 0;           % increase granularity in the z di
 input_struct.diag.store_QEB_3D = 0;           % store full 3D beam phase space?
 
 % computational parameters
-input_struc.comp.qpic_executable = 'qpic.e.twiss.0907'; % Select the qpic executable to be used
+input_struct.comp.qpic_executable = 'qpic.e.twiss.0907'; % Select the qpic executable to be used
 if input_struct.sim.BEAM_EV == 0
     input_struct.comp.num_stages = 1;
     input_struct.comp.mem        = 1024;
