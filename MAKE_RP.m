@@ -46,8 +46,8 @@ input_struct.beam.beta_x       = 0.5;         % Twiss parameter beta_x [m]
 input_struct.beam.alpha_y      = 0;           % Twiss parameter alpha_y
 input_struct.beam.beta_y       = 5;           % Twiss parameter beta_y [m]
 
-input_struct.beam.emit_x       = 50.0;        % normalized X emittance [mm*mrad i.e. 1e-6]
-input_struct.beam.emit_y       = 5.00;        % normalized Y emittance [mm*mrad i.e. 1e-6]
+input_struct.beam.emit_x       = 50;          % normalized X emittance [mm*mrad i.e. 1e-6]
+input_struct.beam.emit_y       = 5;           % normalized Y emittance [mm*mrad i.e. 1e-6]
 input_struct.beam.sigma_z      = 20;          % Gaussian sigma_z [um]
 input_struct.beam.beam_match   = 0;           % 1: override sigma_x, sigma_y with matched counterparts, 0: do nothing
 input_struct.beam.emit_match   = 0;           % 1: override emitt_x, emitt_y with matched counterparts, 0: do nothing

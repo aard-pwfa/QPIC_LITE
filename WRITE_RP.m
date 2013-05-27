@@ -147,11 +147,11 @@ while( row ~= -1 )
           fprintf(fidout, [' Init_Routine = ' num2str(input_struct.Init_Routine) '\n']  );
           fprintf(fidout, [' BEAM_PROFILE = ''test.hdf''' '\n']  );
           fprintf(fidout, [' QUIET_START = .true.' '\n']  );
-          fprintf(fidout, [' Parameter_Array(1:1,1:3) = ' num2str(input_struct.pos.X_center, '%.2f') ',' num2str(input_struct.pos.Y_center, '%.2f')  ',' num2str(input_struct.pos.Z_center, '%.2f') '\n']);
+          fprintf(fidout, [' Parameter_Array(1:1,1:3) = ' num2str(input_struct.pos.X_center, '%.4f') ',' num2str(input_struct.pos.Y_center, '%.4f')  ',' num2str(input_struct.pos.Z_center, '%.4f') '\n']);
           if input_struct.Init_Routine == 1
-          fprintf(fidout, [' Parameter_Array(2:2,1:3) = ' num2str(input_struct.beam.sigma_x, '%.2f') ',' num2str(input_struct.beam.sigma_y, '%.2f')  ',' num2str(input_struct.beam.sigma_z, '%.2f') '\n']);
+          fprintf(fidout, [' Parameter_Array(2:2,1:3) = ' num2str(input_struct.beam.sigma_x, '%.4f') ',' num2str(input_struct.beam.sigma_y, '%.4f')  ',' num2str(input_struct.beam.sigma_z, '%.4f') '\n']);
           elseif input_struct.Init_Routine == 5
-          fprintf(fidout, [' Parameter_Array(2:2,1:5) = ' num2str(input_struct.beam.alpha_x, '%.2f') ',' num2str(input_struct.beam.beta_x, '%.2f')  ',' num2str(input_struct.beam.alpha_y, '%.2f') ',' num2str(input_struct.beam.beta_y, '%.2f')  ',' num2str(input_struct.beam.sigma_z, '%.2f') '\n']);
+          fprintf(fidout, [' Parameter_Array(2:2,1:5) = ' num2str(input_struct.beam.alpha_x, '%.4f') ',' num2str(input_struct.beam.beta_x, '%.4f')  ',' num2str(input_struct.beam.alpha_y, '%.4f') ',' num2str(input_struct.beam.beta_y, '%.4f')  ',' num2str(input_struct.beam.sigma_z, '%.4f') '\n']);
           end
           fprintf(fidout, [' Parameter_Array(3:3,1:3) = ' num2str(input_struct.beam.emit_x, '%.3f') ',' num2str(input_struct.beam.emit_y, '%.3f') ',' num2str(0., '%.3f')  '\n'] );
           fprintf(fidout, [' Parameter_Array(4:4,1:3) = ' num2str(0., '%.3f') ',' num2str(-0., '%.3f') ',' num2str(0., '%.3f')  '\n'] );
