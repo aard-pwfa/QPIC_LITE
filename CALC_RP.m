@@ -57,6 +57,16 @@ if input_struct.beam.energy == 0
    input_struct.beam.gamma  = input_struct.beam.gamma;      % beam gamma
 end
 
+% Calc alpha and beta if waist position specified
+if input_struct.beam.s_waist ~=0
+    beta_star_x = 1e-6*input_struct.beam.gamma*input_struct.beam.sigma_x^2/input_struct.beam.emit_x;  % in m
+    beta_star_y = 1e-6*input_struct.beam.gamma*input_struct.beam.sigma_y^2/input_struct.beam.emit_y;  % in m
+    input_struct.beam.alpha_x = input_struct.beam.s_waist/beta_star_x;
+    input_struct.beam.beta_x = beta_star_x*(1+input_struct.beam.alpha_x^2);
+    input_struct.beam.alpha_y = input_struct.beam.s_waist/beta_star_y;
+    input_struct.beam.beta_y = beta_star_y*(1+input_struct.beam.alpha_y^2);
+end
+
 % Betatron frequecy, wavelength
 input_struct.beam.omega_b  = sqrt(input_struct.plasma.density*1e6*SI_e^2/... 
     (2*input_struct.beam.gamma*input_struct.beam.mass*SI_em*SI_eps0));     % betatron frequency [rad/s]

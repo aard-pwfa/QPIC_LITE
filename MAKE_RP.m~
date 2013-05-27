@@ -37,10 +37,13 @@ input_struct.beam.energy       = 0;           % beam mean energy [GeV], if 0 use
 input_struct.Init_Routine      = 5;           % 1 for gaussian beam initialization, 5 for Twiss parameter beam initialization
 input_struct.beam.sigma_x      = 10;          % Gaussian sigma_x [um]
 input_struct.beam.sigma_y      = 10;          % Gaussian sigma_y [um]
-input_struct.beam.s_waist      = 0.35;        % Waist position relative to start of the simulation [m]
-                                              % If 0, then alpha and beta indicated below are used. 
-                                              % If different from 0, alpha and beta are calculated from
-                                              % sigma_x, sigma_y and s_waist.
+
+input_struct.beam.s_waist      = 0.35;        % Waist position relative to start of the simulation [m]...
+                                              % If 0, then alpha and beta
+                                              % below are used. If
+                                              % different from 0, alpha and
+                                              % beta are cal
+
 input_struct.beam.alpha_x      = 0;           % Twiss parameter alpha_x
 input_struct.beam.beta_x       = 0.5;         % Twiss parameter beta_x [m]
 input_struct.beam.alpha_y      = 0;           % Twiss parameter alpha_y
