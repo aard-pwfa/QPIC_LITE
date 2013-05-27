@@ -15,7 +15,6 @@ input_struct.sim.BEAM_EV       = 1;           % 0 : calc wake only, 1 : propagat
 input_struct.sim.prop          = 1;           % propagation length of the beam [m]
 input_struct.sim.DT            = 0;           % Delta T between beam pushes [1/omega_p]. If 0: use calc from formula
 input_struct.sim.dump_freq     = 10;          % Dump frequency
-input_struct.sim.run_time      = 72;          % Amount of computer time to run sim for in hours, 1 hour if BEAM_EV = 0
 input_struct.sim.Use_Destroyer = 'false';     % indicate 'true' or 'false' here, to enable (disable) the particle destroyer
 
 % plasma parameters
@@ -75,6 +74,7 @@ elseif input_struct.sim.BEAM_EV == 1
     input_struct.comp.num_stages = 1;
     input_struct.comp.mem        = 4096;
     input_struct.comp.tasks      = 128;
+    input_struct.comp.run_time   = 72;        % Amount of computer time to run sim for in hours
 end
 
 
