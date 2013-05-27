@@ -3,7 +3,7 @@
 
 % clear all;
 
-sim_name = 'Sim_200';
+input_struct.sim_name = 'Sim_200';
 
 % INPUT TO RPINPUT
 
@@ -12,7 +12,7 @@ SI_consts;
 
 % simulation parameters
 input_struct.sim.BEAM_EV       = 1;           % 0 : calc wake only, 1 : propagate and evolve beam
-input_struct.sim.prop          = 1;           % propagation length of the beam [m]
+input_struct.sim.prop          = 2;           % propagation length of the beam [m]
 input_struct.sim.DT            = 0;           % Delta T between beam pushes [1/omega_p]. If 0: use calc from formula
 input_struct.sim.dump_freq     = 10;          % Dump frequency
 input_struct.sim.Use_Destroyer = 'false';     % indicate 'true' or 'false' here, to enable (disable) the particle destroyer
@@ -37,7 +37,7 @@ input_struct.beam.energy       = 0;           % beam mean energy [GeV], if 0 use
 input_struct.Init_Routine      = 5;           % 1 for gaussian beam initialization, 5 for Twiss parameter beam initialization
 input_struct.beam.sigma_x      = 10;          % Gaussian sigma_x [um]
 input_struct.beam.sigma_y      = 10;          % Gaussian sigma_y [um]
-input_struct.beam.s_waist      = 0.35;        % Waist position relative to start of the simulation [m]
+input_struct.beam.s_waist      = 0.7;        % Waist position relative to start of the simulation [m]
                                               % If 0, then alpha and beta indicated below are used. 
                                               % If different from 0, alpha and beta are calculated from
                                               % sigma_x, sigma_y and s_waist.
@@ -77,7 +77,7 @@ if input_struct.sim.BEAM_EV == 0
 elseif input_struct.sim.BEAM_EV == 1
     input_struct.comp.num_stages = 1;
     input_struct.comp.mem        = 4096;
-    input_struct.comp.tasks      = 128;
+    input_struct.comp.tasks      = 64;
     input_struct.comp.run_time   = 72;        % Amount of computer time to run sim for in hours
 end
 
@@ -107,7 +107,7 @@ if ~exist(command_dir,'dir')
     mkdir(command_dir);
 end
 
-rpinput_output_name = sim_name;
+rpinput_output_name = input_struct.sim_name;
 rpinput_output_file = [rpinput_dir 'rpinput_' rpinput_output_name];
 
 write = 1;
