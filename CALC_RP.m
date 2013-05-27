@@ -185,18 +185,18 @@ input_struct.size.Frac_Z = input_struct.size.Cell_Z/input_struct.plasma.SD;
 % PLASMA PROFILE %
 %%%%%%%%%%%%%%%%%%
 
-if input_struct.plasma.profile == 1    
-    input_struct.plasma.n_point = input_struct.plasma.n_point; % number of points used to define channel
-    input_struct.plasma.radius  = input_struct.plasma.radius;  % channel radius
-    input_struct.plasma.width   = input_struct.plasma.width;   % annulus width
-    
-    % Calc plasma profile
-    input_struct.plasma.r = linspace(0,floor(input_struct.size.Box_X/2),input_struct.plasma.n_point); % N radial points
-    %param_struct.plasma.n = param_struct.plasma.density * ...
-        %exp(-(param_struct.plasma.r - param_struct.plasma.radius).^2/(2*param_struct.plasma.width^2)); % radial density
-    input_struct.plasma.n = exp(-(input_struct.plasma.r - input_struct.plasma.radius).^2/(2*input_struct.plasma.width^2));
-    %param_struct.plasma.n = param_struct.plasma.n .* (param_struct.plasma.n > 1);
-end
+% if input_struct.plasma.profile == 1
+input_struct.plasma.n_point = input_struct.plasma.n_point; % number of points used to define channel
+input_struct.plasma.radius  = input_struct.plasma.radius;  % channel radius
+input_struct.plasma.width   = input_struct.plasma.width;   % annulus width
+
+% Calc plasma profile
+input_struct.plasma.r = linspace(0,floor(input_struct.size.Box_X/2),input_struct.plasma.n_point); % N radial points
+%param_struct.plasma.n = param_struct.plasma.density * ...
+%exp(-(param_struct.plasma.r - param_struct.plasma.radius).^2/(2*param_struct.plasma.width^2)); % radial density
+input_struct.plasma.n = exp(-(input_struct.plasma.r - input_struct.plasma.radius).^2/(2*input_struct.plasma.width^2));
+%param_struct.plasma.n = param_struct.plasma.n .* (param_struct.plasma.n > 1);
+% end
 
 %%%%%%%%%%%%%%%%%%%
 % TIME ATTRIBUTES %
