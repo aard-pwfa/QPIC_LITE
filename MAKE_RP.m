@@ -7,6 +7,9 @@ sim_name = 'Sim_200';
 
 % INPUT TO RPINPUT
 
+% import standard SI constants
+SI_consts;
+
 % simulation parameters
 input_struct.sim.BEAM_EV       = 1;           % 0 : calc wake only, 1 : propagate and evolve beam
 input_struct.sim.prop          = 1;           % propagation length of the beam [m]
@@ -78,9 +81,6 @@ end
 
 
 % CREATE DIRECTORIES AND VARIOUS VARIABLES
-
-% import standard SI constants
-SI_consts;
 
 % specify template
 rpinput_template_file = [pwd '/rpinputs/rpinput_template'];
