@@ -81,7 +81,7 @@ if( input_struct.beam.beam_match )
       input_struct.plasma.k_p*sqrt(2/input_struct.beam.gamma));      % beam size Y [um]
   
   input_struct.beam.emit_x  = input_struct.beam.emit_x;              % beam norm X emmitance [mm*mrad]
-  input_struct.beam.emit_y  = input_struct.beam.emit_x;              % beam norm Y emmitance [mm*mrad]
+  input_struct.beam.emit_y  = input_struct.beam.emit_y;              % beam norm Y emmitance [mm*mrad]
 
 % Calc emittance if emit_match == 1
 elseif( input_struct.beam.emit_match )
@@ -98,7 +98,7 @@ else
   input_struct.beam.sigma_y = input_struct.beam.sigma_y;             % beam size Y [um]
   
   input_struct.beam.emit_x  = input_struct.beam.emit_x;              % beam norm X emmitance [mm*mrad]
-  input_struct.beam.emit_y  = input_struct.beam.emit_x;              % beam norm Y emmitance [mm*mrad]
+  input_struct.beam.emit_y  = input_struct.beam.emit_y;              % beam norm Y emmitance [mm*mrad]
 end
 
 % Normalized beam divergence
