@@ -45,7 +45,6 @@ input_struct.beam.alpha_x      = 0;           % Twiss parameter alpha_x
 input_struct.beam.beta_x       = 0.5;         % Twiss parameter beta_x [m]
 input_struct.beam.alpha_y      = 0;           % Twiss parameter alpha_y
 input_struct.beam.beta_y       = 5;           % Twiss parameter beta_y [m]
-
 input_struct.beam.emit_x       = 50;          % normalized X emittance [mm*mrad i.e. 1e-6]
 input_struct.beam.emit_y       = 5;           % normalized Y emittance [mm*mrad i.e. 1e-6]
 input_struct.beam.sigma_z      = 20;          % Gaussian sigma_z [um]
