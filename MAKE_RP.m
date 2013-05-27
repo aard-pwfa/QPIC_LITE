@@ -27,7 +27,7 @@ if ~exist(command_dir,'dir')
     mkdir(command_dir);
 end
 
-rpinput_output_name = 'Sim_150';
+rpinput_output_name = 'Sim_200';
 rpinput_output_file = [rpinput_dir 'rpinput_' rpinput_output_name];
 
 write = 1;
@@ -48,7 +48,8 @@ input_struct.sim.BEAM_EV       = 1;           % 0 : calc wake only, 1 : propagat
 input_struct.sim.prop          = 1;           % propagation length of the beam [m]
 input_struct.sim.DT            = 0;           % Delta T between beam pushes [1/omega_p]. If 0: use calc from formula
 input_struct.sim.dump_freq     = 10;          % Dump frequency
-input_struct.sim.run_time      = 72;          % Amount of computer time to run sim for, 1 if BEAM_EV = 0
+input_struct.sim.run_time      = 72;          % Amount of computer time to run sim for in hours, 1 hour if BEAM_EV = 0
+input_struct.sim.Use_Destroyer = 'false';     % indicate 'true' or 'false' here, to enable (disable) the particle destroyer
 
 % plasma parameters
 input_struct.plasma.density    = 5e17;        % /cm^3
@@ -96,15 +97,28 @@ input_struct.size.z_grain      = 0;           % increase granularity in the z di
 % diagnostic parameters
 input_struct.diag.store_QEB_3D = 0;           % store full 3D beam phase space?
 
+% computational parameters
+input_struc.comp.qpic_executable = 'qpic.e.twiss.0907'; % Select the qpic executable to be used
+if input_struct.sim.BEAM_EV == 0
+    input_struct.comp.num_stages = 1;
+    input_struct.comp.mem        = 1024;
+    input_struct.comp.tasks      = 8;
+    input_struct.comp.run_time   = 1;
+elseif input_struct.sim.BEAM_EV == 1
+    input_struct.comp.num_stages = 1;
+    input_struct.comp.mem        = 4096;
+    input_struct.comp.tasks      = 128;
+end
+
 % RPINPUT CALCULATOR
-param_struct = CALC_RP(input_struct);
+input_struct = CALC_RP(input_struct);
 
 % RPINPUT WRITER
 if write
-    WRITE_RP(rpinput_template_file, rpinput_output_file, param_struct);
+    WRITE_RP(rpinput_template_file, rpinput_output_file, input_struct);
     save([param_dir 'param_' rpinput_output_name '.mat'], 'param_struct');
-    run_dir = WRITE_CMD(command_dir, rpinput_output_name, param_struct.comp.mem,...
-        param_struct.comp.tasks, param_struct.comp.run_time);
+    run_dir = WRITE_CMD(command_dir, rpinput_output_name, input_struct.comp.mem,...
+        input_struct.comp.tasks, input_struct.comp.run_time);
 end
 
 %exit;
