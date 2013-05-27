@@ -1,45 +1,9 @@
 % QuickPIC Matlab rpinput generation example script
 % S. Gessner Sep 07, 2012
 
-%clear all;
+% clear all;
 
-% import standard SI constants
-SI_consts;
-
-% specify template
-rpinput_template_file = [pwd '/rpinputs/rpinput_template'];
-
-% specify output
-date_dir = GET_DATE_DIR;
-
-rpinput_dir = [pwd '/rpinputs/' date_dir];
-if ~exist(rpinput_dir,'dir')
-    mkdir(rpinput_dir);
-end
-
-param_dir = [pwd '/params/' date_dir];
-if ~exist(param_dir,'dir')
-    mkdir(param_dir);
-end
-
-command_dir = [pwd '/commands/' date_dir];
-if ~exist(command_dir,'dir')
-    mkdir(command_dir);
-end
-
-rpinput_output_name = 'Sim_200';
-rpinput_output_file = [rpinput_dir 'rpinput_' rpinput_output_name];
-
-write = 1;
-% check to see if you want to overwrite file
-if exist(rpinput_output_file,'file')
-   reply = input(['File ' rpinput_output_file ' exists. \n Do you want to overwrite? y/n '], 's');
-   if (strcmp(reply,'n'))
-      disp('Ok. That''s cool.');
-      write = 0;
-   end
-end
-
+sim_name = 'Sim_200';
 
 % INPUT TO RPINPUT
 
@@ -110,13 +74,56 @@ elseif input_struct.sim.BEAM_EV == 1
     input_struct.comp.tasks      = 128;
 end
 
+
+
+
+% CREATE DIRECTORIES AND VARIOUS VARIABLES
+
+% import standard SI constants
+SI_consts;
+
+% specify template
+rpinput_template_file = [pwd '/rpinputs/rpinput_template'];
+
+% specify output
+date_dir = GET_DATE_DIR;
+
+rpinput_dir = [pwd '/rpinputs/' date_dir];
+if ~exist(rpinput_dir,'dir')
+    mkdir(rpinput_dir);
+end
+
+param_dir = [pwd '/params/' date_dir];
+if ~exist(param_dir,'dir')
+    mkdir(param_dir);
+end
+
+command_dir = [pwd '/commands/' date_dir];
+if ~exist(command_dir,'dir')
+    mkdir(command_dir);
+end
+
+rpinput_output_name = sim_name;
+rpinput_output_file = [rpinput_dir 'rpinput_' rpinput_output_name];
+
+write = 1;
+% check to see if you want to overwrite file
+if exist(rpinput_output_file,'file')
+   reply = input(['File ' rpinput_output_file ' exists. \n Do you want to overwrite? y/n '], 's');
+   if (strcmp(reply,'n'))
+      disp('Ok. That''s cool.');
+      write = 0;
+   end
+end
+
+
 % RPINPUT CALCULATOR
 input_struct = CALC_RP(input_struct);
 
 % RPINPUT WRITER
 if write
     WRITE_RP(rpinput_template_file, rpinput_output_file, input_struct);
-    save([param_dir 'param_' rpinput_output_name '.mat'], 'param_struct');
+    save([param_dir 'param_' rpinput_output_name '.mat'], 'input_struct');
     run_dir = WRITE_CMD(command_dir, rpinput_output_name, input_struct.comp.mem,...
         input_struct.comp.tasks, input_struct.comp.run_time);
 end
