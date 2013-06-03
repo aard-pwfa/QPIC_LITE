@@ -3,7 +3,7 @@
 
 % clear all;
 
-input_struct.sim_name = 'Sim_201';
+input_struct.sim_name = 'Sim_202';
 
 % INPUT TO RPINPUT
 
@@ -76,9 +76,9 @@ if input_struct.sim.BEAM_EV == 0
     input_struct.comp.run_time   = 1;
 elseif input_struct.sim.BEAM_EV == 1
     input_struct.comp.num_stages = 1;
-    input_struct.comp.mem        = 4096;
+    input_struct.comp.mem        = 2048;
     input_struct.comp.tasks      = 64;
-    input_struct.comp.run_time   = 72;        % Amount of computer time to run sim for in hours
+    input_struct.comp.run_time   = 10;        % Amount of computer time to run sim for in hours
 end
 
 
