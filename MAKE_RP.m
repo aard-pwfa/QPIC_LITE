@@ -3,7 +3,7 @@
 
 % clear all;
 
-input_struct.sim_name = 'Sim_202';
+input_struct.sim_name = 'Sim_200';
 
 % INPUT TO RPINPUT
 
@@ -12,7 +12,7 @@ SI_consts;
 
 % simulation parameters
 input_struct.sim.BEAM_EV       = 1;           % 0 : calc wake only, 1 : propagate and evolve beam
-input_struct.sim.prop          = 2;           % propagation length of the beam [m]
+input_struct.sim.prop          = 1;           % propagation length of the beam [m]
 input_struct.sim.DT            = 0;           % Delta T between beam pushes [1/omega_p]. If 0: use calc from formula
 input_struct.sim.dump_freq     = 10;          % Dump frequency
 input_struct.sim.Use_Destroyer = 'false';     % indicate 'true' or 'false' here, to enable (disable) the particle destroyer
@@ -37,7 +37,7 @@ input_struct.beam.energy       = 0;           % beam mean energy [GeV], if 0 use
 input_struct.Init_Routine      = 5;           % 1 for gaussian beam initialization, 5 for Twiss parameter beam initialization
 input_struct.beam.sigma_x      = 10;          % Gaussian sigma_x [um]
 input_struct.beam.sigma_y      = 10;          % Gaussian sigma_y [um]
-input_struct.beam.s_waist      = 0.7;        % Waist position relative to start of the simulation [m]
+input_struct.beam.s_waist      = 0.35;        % Waist position relative to start of the simulation [m]
                                               % If 0, then alpha and beta indicated below are used. 
                                               % If different from 0, alpha and beta are calculated from
                                               % sigma_x, sigma_y and s_waist.
@@ -53,9 +53,9 @@ input_struct.beam.emit_match   = 0;           % 1: override emitt_x, emitt_y wit
 input_struct.beam.z_match      = 0;           % 1: override sigma_z with sqrt(2)/k_p, 0: do nothing
 
 % size parameters
-input_struct.size.Z_waves      = 2.;          % set box length by number of plasma wavelengths
+input_struct.size.Z_waves      = 4.;          % set box length by number of plasma wavelengths
 input_struct.size.Z_bunches    = 0;           % set box length by bunch lengths
-input_struct.size.X_bubbles    = 10;          % set box width by number of bubble radii
+input_struct.size.X_bubbles    = 20;          % set box width by number of bubble radii
 input_struct.size.X_bunches    = 0.0;         % set box width by number of bunch radii
 input_struct.size.X_center     = 0.5;         % place bunch as fraction of box width, 0 at start of box, 1 at end
 input_struct.size.Y_center     = 0.5;         % place bunch as fraction of box width, 0 at start of box, 1 at end
