@@ -87,7 +87,7 @@ end
 % CREATE DIRECTORIES AND VARIOUS VARIABLES
 
 % specify template
-rpinput_template_file = [pwd '/rpinputs/rpinput_template'];
+rpinput_template_file = [pwd '/rpinput_template'];
 
 % specify output
 date_dir = GET_DATE_DIR;
