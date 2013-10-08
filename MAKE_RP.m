@@ -3,7 +3,7 @@
 
 % clear all;
 
-input_struct.sim_name = 'Sim_200';
+input_struct.sim_name = 'SJG_001';
 
 % INPUT TO RPINPUT
 
@@ -11,17 +11,17 @@ input_struct.sim_name = 'Sim_200';
 SI_consts;
 
 % simulation parameters
-input_struct.sim.BEAM_EV       = 1;           % 0 : calc wake only, 1 : propagate and evolve beam
+input_struct.sim.BEAM_EV       = 0;           % 0 : calc wake only, 1 : propagate and evolve beam
 input_struct.sim.prop          = 1;           % propagation length of the beam [m]
 input_struct.sim.DT            = 0;           % Delta T between beam pushes [1/omega_p]. If 0: use calc from formula
 input_struct.sim.dump_freq     = 10;          % Dump frequency
 input_struct.sim.Use_Destroyer = 'false';     % indicate 'true' or 'false' here, to enable (disable) the particle destroyer
 
 % plasma parameters
-input_struct.plasma.density    = 5e17;        % /cm^3
+input_struct.plasma.density    = 1e17;        % /cm^3
 input_struct.plasma.charge     = -1.0;        % -1 for electron, +1 for positron
 input_struct.plasma.mass       = SI_eM/SI_eM; % Particle mass in units of electron mass
-input_struct.plasma.PREION     = 0;           % 0 : non-ionized plasma 1: pre-ionized plasma
+input_struct.plasma.PREION     = 1;           % 0 : non-ionized plasma 1: pre-ionized plasma
 input_struct.plasma.Z          = 18;          % atomic number of plasma gas
 input_struct.plasma.profile    = 0;           % 0: uniform plasma, 1: hollow channel plasma
 input_struct.plasma.n_point    = 5;           % number of points used to create plasma profile
@@ -34,7 +34,7 @@ input_struct.beam.mass         = SI_eM/SI_eM; % Particle mass in units of electr
 input_struct.beam.N_particles  = 2.0e10;      % Number of beam particles
 input_struct.beam.gamma        = 39139;       % relativistic factor gamma, if 0 energy specified below
 input_struct.beam.energy       = 0;           % beam mean energy [GeV], if 0 use gamma to calculate energy
-input_struct.Init_Routine      = 5;           % 1 for gaussian beam initialization, 5 for Twiss parameter beam initialization
+input_struct.Init_Routine      = 1;           % 1 for gaussian beam initialization, 5 for Twiss parameter beam initialization
 input_struct.beam.sigma_x      = 10;          % Gaussian sigma_x [um]
 input_struct.beam.sigma_y      = 10;          % Gaussian sigma_y [um]
 input_struct.beam.s_waist      = 0.35;        % Waist position relative to start of the simulation [m]
@@ -70,11 +70,13 @@ input_struct.diag.store_QEB_3D = 0;           % store full 3D beam phase space?
 % computational parameters
 input_struct.comp.qpic_executable = 'qpic.e.twiss.0907'; % Select the qpic executable to be used
 if input_struct.sim.BEAM_EV == 0
+    input_struct.comp.evolution  = '.false.';
     input_struct.comp.num_stages = 1;
     input_struct.comp.mem        = 1024;
     input_struct.comp.tasks      = 8;
     input_struct.comp.run_time   = 1;
 elseif input_struct.sim.BEAM_EV == 1
+    input_struct.comp.evolution  = '.true.';
     input_struct.comp.num_stages = 1;
     input_struct.comp.mem        = 2048;
     input_struct.comp.tasks      = 64;

@@ -127,7 +127,7 @@ while( row ~= -1 )
        %for(n_beam=1:N_beams),
           fprintf(fidout, '\n'  );
           fprintf(fidout, ['&Beam' '\n']  );
-          fprintf(fidout, [' BEAM_EVOLUTION = .true.' '\n']  );
+          fprintf(fidout, [' BEAM_EVOLUTION = ' input_struct.comp.evolution '\n']  );
           fprintf(fidout, [' MIN_BEAM_PARTICLE = 8' '\n']  );
           fprintf(fidout, [' NPX =  ' num2str(2^7) ', NPY = ' num2str(2^7) ', NPZ = ' num2str(2^8) '\n']);
           fprintf(fidout, [' Charge = ' num2str(input_struct.beam.charge, '%.1f') '\n']  );
