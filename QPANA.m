@@ -9,20 +9,20 @@ clear all;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Name of folder containing data
-name = 'cmdTest3';
+name = 'SJG_001';
 
 % Set Data and plotting directories
-data_dir = '/Users/sgess/Desktop/data/qp_tars/2012/Sep/12/cmdTest3/';
-plot_dir = '/Users/sgess/Desktop/plots/QP/2012/Sep/12/cmdTest3/';
+data_dir = '/Users/sgess/Desktop/FACET/2014/qp_tars/2013/Oct/SJG_001/';
+plot_dir = '/Users/sgess/Desktop/FACET/2014/qp_plots/2013/Oct/SJG_001/';
 if ~exist(plot_dir,'dir')
     mkdir(plot_dir);
 end
 
 % Plot units, natural or real
-plot_units = 'real';
+plot_units = 'natural';
 
 % Save data?
-save_plot = 1;
+save_plot = 0;
 save_ext  = '.pdf';
 
 % Get plasma and beam parameters
@@ -37,7 +37,7 @@ FEZ_type = 'FEZ-XZ';
 BEAM = 1;
 
 % Choose time steps to run over
-file_number = 2;
+file_number = 1;
 
 
 
@@ -67,8 +67,8 @@ end
 % PLOT DATA %
 %%%%%%%%%%%%%
 
-PLOT_FUN(QEB_type,beam_rho,z_axis,x_axis,plot_units,file_number,param_struct,plot_dir,save_plot,save_ext);
-PLOT_FUN(QEP1_type,plas_rho,z_axis,x_axis,plot_units,file_number,param_struct,plot_dir,save_plot,save_ext);
-PLOT_FUN(FEZ_type,field_EZ,z_axis,x_axis,plot_units,file_number,param_struct,plot_dir,save_plot,save_ext);
-
+PLOT_FUN(QEB_type,2,beam_rho,z_axis,x_axis,plot_units,file_number,input_struct,plot_dir,save_plot,save_ext,1);
+PLOT_FUN(QEP1_type,2,plas_rho,z_axis,x_axis,plot_units,file_number,input_struct,plot_dir,save_plot,save_ext,2);
+PLOT_FUN(FEZ_type,2,field_EZ,z_axis,x_axis,plot_units,file_number,input_struct,plot_dir,save_plot,save_ext,3);
+PLOT_FUN(FEZ_type,1,field_EZ,z_axis,x_axis,plot_units,file_number,input_struct,plot_dir,save_plot,save_ext,4);
 %save('../../../COMPARE/QP_eShort2.mat','ZZ','field_EZ');
