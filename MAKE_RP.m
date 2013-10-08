@@ -22,7 +22,7 @@ input_struct.plasma.density    = 1e17;        % /cm^3
 input_struct.plasma.charge     = -1.0;        % -1 for electron, +1 for positron
 input_struct.plasma.mass       = SI_eM/SI_eM; % Particle mass in units of electron mass
 input_struct.plasma.PREION     = 1;           % 0 : non-ionized plasma 1: pre-ionized plasma
-input_struct.plasma.Z          = 18;          % atomic number of plasma gas
+input_struct.plasma.Z          = 3;           % atomic number of plasma gas
 input_struct.plasma.profile    = 0;           % 0: uniform plasma, 1: hollow channel plasma
 input_struct.plasma.n_point    = 5;           % number of points used to create plasma profile
 input_struct.plasma.radius     = 25;          % channel radius [um]
@@ -53,9 +53,9 @@ input_struct.beam.emit_match   = 0;           % 1: override emitt_x, emitt_y wit
 input_struct.beam.z_match      = 0;           % 1: override sigma_z with sqrt(2)/k_p, 0: do nothing
 
 % size parameters
-input_struct.size.Z_waves      = 4.;          % set box length by number of plasma wavelengths
+input_struct.size.Z_waves      = 2.;          % set box length by number of plasma wavelengths
 input_struct.size.Z_bunches    = 0;           % set box length by bunch lengths
-input_struct.size.X_bubbles    = 20;          % set box width by number of bubble radii
+input_struct.size.X_bubbles    = 10;          % set box width by number of bubble radii
 input_struct.size.X_bunches    = 0.0;         % set box width by number of bunch radii
 input_struct.size.X_center     = 0.5;         % place bunch as fraction of box width, 0 at start of box, 1 at end
 input_struct.size.Y_center     = 0.5;         % place bunch as fraction of box width, 0 at start of box, 1 at end
