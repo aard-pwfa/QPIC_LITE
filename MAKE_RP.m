@@ -24,7 +24,7 @@ input_struct.plasma.mass       = SI_eM/SI_eM; % Particle mass in units of electr
 input_struct.plasma.PREION     = 0;           % 0 : non-ionized plasma 1: pre-ionized plasma
 input_struct.plasma.Z          = 18;          % atomic number of plasma gas
 input_struct.plasma.profile    = 0;           % 0: uniform plasma, 1: hollow channel plasma
-input_struct.plasma.n_point    = 5;         % number of points used to create plasma profile
+input_struct.plasma.n_point    = 5;           % number of points used to create plasma profile
 input_struct.plasma.radius     = 25;          % channel radius [um]
 input_struct.plasma.width      = 3;           % annulus width [um]
 
