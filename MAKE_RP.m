@@ -3,7 +3,7 @@
 
 % clear all;
 
-input_struct.sim_name = 'SJG_001';
+input_struct.sim_name = 'SJG_004';
 
 % INPUT TO RPINPUT
 
@@ -31,7 +31,7 @@ input_struct.plasma.width      = 3;           % annulus width [um]
 % beam parameters
 input_struct.beam.charge       = -1.0;        % -1 for electron, +1 for positron
 input_struct.beam.mass         = SI_eM/SI_eM; % Particle mass in units of electron mass
-input_struct.beam.N_particles  = 2.0e10;      % Number of beam particles
+input_struct.beam.N_particles  = 2.4e10;      % Number of beam particles
 input_struct.beam.gamma        = 39139;       % relativistic factor gamma, if 0 energy specified below
 input_struct.beam.energy       = 0;           % beam mean energy [GeV], if 0 use gamma to calculate energy
 input_struct.Init_Routine      = 1;           % 1 for gaussian beam initialization, 5 for Twiss parameter beam initialization
@@ -53,13 +53,13 @@ input_struct.beam.emit_match   = 0;           % 1: override emitt_x, emitt_y wit
 input_struct.beam.z_match      = 0;           % 1: override sigma_z with sqrt(2)/k_p, 0: do nothing
 
 % size parameters
-input_struct.size.Z_waves      = 2.;          % set box length by number of plasma wavelengths
+input_struct.size.Z_waves      = 3.3;         % set box length by number of plasma wavelengths
 input_struct.size.Z_bunches    = 0;           % set box length by bunch lengths
-input_struct.size.X_bubbles    = 10;          % set box width by number of bubble radii
+input_struct.size.X_bubbles    = 15;          % set box width by number of bubble radii
 input_struct.size.X_bunches    = 0.0;         % set box width by number of bunch radii
 input_struct.size.X_center     = 0.5;         % place bunch as fraction of box width, 0 at start of box, 1 at end
 input_struct.size.Y_center     = 0.5;         % place bunch as fraction of box width, 0 at start of box, 1 at end
-input_struct.size.Z_center     = 0.4;         % place bunch as fraction of box length, 0 at start of box, 1 at end
+input_struct.size.Z_center     = 0.25;        % place bunch as fraction of box length, 0 at start of box, 1 at end
 input_struct.size.x_grain      = 0;           % increase granularity in the x dimension by 2^x_grain
 input_struct.size.y_grain      = 0;           % increase granularity in the y dimension by 2^y_grain
 input_struct.size.z_grain      = 0;           % increase granularity in the z dimension by 2^z_grain

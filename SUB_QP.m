@@ -18,5 +18,3 @@ system('qsub qpic.e.cmd','-echo');
 
 cd(d);
 exit;
-
-
