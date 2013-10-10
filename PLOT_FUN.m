@@ -2,7 +2,8 @@ function plot_obj = PLOT_FUN(data_type,data_dim,data,x_axis,y_axis,plot_units,fi
 
 num_str = num2str(file_number,'%04d');
 
-
+cmap = custom_cmap;
+colormap(cmap.wbgyr);
 
 %%%%%%%%%%%
 % Density %
@@ -42,10 +43,10 @@ if strncmp(data_type,'QE',2)
     end
         
     figure(figure_num);
-    imagesc(ZZ,XX,rho);
+    imagesc(ZZ,XX,-rho);
     xlabel(x_label,'fontsize',16);
     ylabel(y_label,'fontsize',16);
-    %caxis([-7 0]);
+    caxis([0 7]);
     colorbar;
     t = colorbar('peer',gca);
     set(get(t,'ylabel'),'String',c_label,'fontsize',16);
@@ -88,8 +89,8 @@ if strncmp(data_type,'F',1)
         c_label = 'm c \omega_p / e';
         
         % Create axes
-        ZZ = linspace(x_axis(1),x_axis(2),size(field,1));
-        XX = linspace(y_axis(1),y_axis(2),size(field,2));
+        ZZ = linspace(x_axis(1),x_axis(2),size(field,2));
+        XX = linspace(y_axis(1),y_axis(2),size(field,1));
         
     elseif strcmp(plot_units,'real')
         
@@ -107,7 +108,7 @@ if strncmp(data_type,'F',1)
     figure(figure_num);
     
     if data_dim == 1
-        plot(ZZ,field(size(field,2)/2,:));
+        plot(ZZ,field(size(field,1)/2,:));
         xlabel(x_label,'fontsize',16);
         ylabel(c_label,'fontsize',16);
         title(comp,'fontsize',16);

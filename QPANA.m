@@ -1,7 +1,7 @@
 % QuickPIC ANALYSIS SCRIPT
 % SPENCER M.F. GESSNER 9/8
 
-clear all;
+%clear all;
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -9,11 +9,11 @@ clear all;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Name of folder containing data
-name = 'SJG_001';
+name = 'SJG_004';
 
 % Set Data and plotting directories
-data_dir = '/Users/sgess/Desktop/FACET/2014/qp_tars/2013/Oct/SJG_001/';
-plot_dir = '/Users/sgess/Desktop/FACET/2014/qp_plots/2013/Oct/SJG_001/';
+data_dir = '/Users/sgess/Desktop/FACET/2014/qp_tars/2013/Oct/SJG_004/';
+plot_dir = '/Users/sgess/Desktop/FACET/2014/qp_plots/2013/Oct/SJG_004/';
 if ~exist(plot_dir,'dir')
     mkdir(plot_dir);
 end
@@ -67,7 +67,7 @@ end
 % PLOT DATA %
 %%%%%%%%%%%%%
 
-PLOT_FUN(QEB_type,2,beam_rho,z_axis,x_axis,plot_units,file_number,input_struct,plot_dir,save_plot,save_ext,1);
+%PLOT_FUN(QEB_type,2,beam_rho,z_axis,x_axis,plot_units,file_number,input_struct,plot_dir,save_plot,save_ext,1);
 PLOT_FUN(QEP1_type,2,plas_rho,z_axis,x_axis,plot_units,file_number,input_struct,plot_dir,save_plot,save_ext,2);
 PLOT_FUN(FEZ_type,2,field_EZ,z_axis,x_axis,plot_units,file_number,input_struct,plot_dir,save_plot,save_ext,3);
 PLOT_FUN(FEZ_type,1,field_EZ,z_axis,x_axis,plot_units,file_number,input_struct,plot_dir,save_plot,save_ext,4);
