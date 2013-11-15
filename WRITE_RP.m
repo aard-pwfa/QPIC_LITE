@@ -203,8 +203,13 @@ while( row ~= -1 )
           if input_struct.plasma.profile == 0
               fprintf(fidout, ' Profile_type=0 \n' );
           elseif input_struct.plasma.profile == 1
-              fprintf(fidout, ' Profile_type=21 \n' );
+              %fprintf(fidout, ' Profile_type=21 \n' );
+              fprintf(fidout, ' Profile_type=18 \n' );
           end
+      elseif( ~isempty(strfind(row, 'argx1') ) && section_species == 1)
+	  fprintf(fidout, [' argx1=' num2str(input_struct.plasma.radius, '%.2f') '\n'] );
+      elseif( ~isempty(strfind(row, 'argx2') ) && section_species == 1)
+          fprintf(fidout, [' argx2=1' '\n'] );
       elseif( ~isempty(strfind(row, 'Prof_Nsec') ) && section_species == 1)
           fprintf(fidout, [' Prof_Nsec = ' num2str( input_struct.plasma.n_point) '\n'] );
       elseif( ~isempty(strfind(row, 'Prof_Parameter(1,') ) && section_species == 1)

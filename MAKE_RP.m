@@ -3,7 +3,7 @@
 
 % clear all;
 
-input_struct.sim_name = 'SJG_004';
+input_struct.sim_name = 'HOL_test';
 
 % INPUT TO RPINPUT
 
@@ -22,16 +22,16 @@ input_struct.plasma.density    = 1e17;        % /cm^3
 input_struct.plasma.charge     = -1.0;        % -1 for electron, +1 for positron
 input_struct.plasma.mass       = SI_eM/SI_eM; % Particle mass in units of electron mass
 input_struct.plasma.PREION     = 1;           % 0 : non-ionized plasma 1: pre-ionized plasma
-input_struct.plasma.Z          = 3;           % atomic number of plasma gas
-input_struct.plasma.profile    = 0;           % 0: uniform plasma, 1: hollow channel plasma
+input_struct.plasma.Z          = 1;           % atomic number of plasma gas
+input_struct.plasma.profile    = 1;           % 0: uniform plasma, 1: hollow channel plasma
 input_struct.plasma.n_point    = 5;           % number of points used to create plasma profile
-input_struct.plasma.radius     = 25;          % channel radius [um]
+input_struct.plasma.radius     = 33.61;       % channel radius [um]
 input_struct.plasma.width      = 3;           % annulus width [um]
 
 % beam parameters
 input_struct.beam.charge       = -1.0;        % -1 for electron, +1 for positron
 input_struct.beam.mass         = SI_eM/SI_eM; % Particle mass in units of electron mass
-input_struct.beam.N_particles  = 2.4e10;      % Number of beam particles
+input_struct.beam.N_particles  = 1.0e10;      % Number of beam particles
 input_struct.beam.gamma        = 39139;       % relativistic factor gamma, if 0 energy specified below
 input_struct.beam.energy       = 0;           % beam mean energy [GeV], if 0 use gamma to calculate energy
 input_struct.Init_Routine      = 1;           % 1 for gaussian beam initialization, 5 for Twiss parameter beam initialization
