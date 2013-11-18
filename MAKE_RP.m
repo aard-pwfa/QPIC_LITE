@@ -3,7 +3,7 @@
 
 % clear all;
 
-input_struct.sim_name = 'HOL_test';
+input_struct.sim_name = 'testing2';
 
 % INPUT TO RPINPUT
 
