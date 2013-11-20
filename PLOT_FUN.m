@@ -46,7 +46,7 @@ if strncmp(data_type,'QE',2)
     imagesc(ZZ,XX,-rho);
     xlabel(x_label,'fontsize',16);
     ylabel(y_label,'fontsize',16);
-    caxis([0 7]);
+    caxis([0 0.1*max(-rho(:))]);
     colorbar;
     t = colorbar('peer',gca);
     set(get(t,'ylabel'),'String',c_label,'fontsize',16);

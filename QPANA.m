@@ -9,28 +9,31 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Name of folder containing data
-name = 'ea2b';
+name = 'lb_ionize/';
 
 % Set Data and plotting directories
 %data_dir = '/Users/sgess/Desktop/FACET/2014/qp_tars/2013/Oct/SJG_004/';
 %plot_dir = '/Users/sgess/Desktop/FACET/2014/qp_plots/2013/Oct/SJG_004/';
 
-data_dir = '/Volumes/PWFA_GoFlex/sgess/2014/ea2b/';
-plot_dir = '/Users/sgess/Desktop/plots/QP/2014/ea2b/';
+data_root = '/Volumes/PWFA_GoFlex/sgess/2014/';
+plot_root = '/Users/sgess/Desktop/plots/QP/2014/';
+data_dir = [data_root name];
+plot_dir = [plot_root name];
+
 if ~exist(plot_dir,'dir')
     mkdir(plot_dir);
 end
 
 % Plot units, natural or real
-plot_units = 'natural';
+plot_units = 'real';
 
 % Save data?
 save_plot = 0;
 save_ext  = '.pdf';
 
 % Get plasma and beam parameters
-%load([data_dir 'param.mat']);
-input_struct = 0;
+load([data_dir 'param.mat']);
+%input_struct = 0;
 
 % What data do you want to use?
 QEB_type = 'QEB-XZ';
@@ -43,7 +46,7 @@ BEAM = 1;
 % Choose time steps to run over
 file_number = 20;
 
-for file_number = 20:20:1120
+for file_number = 20:20:60
 
 %%%%%%%%%%%%%
 % LOAD DATA %
