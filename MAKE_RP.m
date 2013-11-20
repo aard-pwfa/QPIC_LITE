@@ -12,9 +12,9 @@ SI_consts;
 
 % simulation parameters
 input_struct.sim.BEAM_EV       = 1;           % 0 : calc wake only, 1 : propagate and evolve beam
-input_struct.sim.prop          = 1;           % propagation length of the beam [m]
+input_struct.sim.prop          = 0.5;         % propagation length of the beam [m]
 input_struct.sim.DT            = 0;           % Delta T between beam pushes [1/omega_p]. If 0: use calc from formula
-input_struct.sim.dump_freq     = 10;          % Dump frequency
+input_struct.sim.dump_freq     = 20;          % Dump frequency
 input_struct.sim.Use_Destroyer = 'true';      % indicate 'true' or 'false' here, to enable (disable) the particle destroyer
 
 % plasma parameters
