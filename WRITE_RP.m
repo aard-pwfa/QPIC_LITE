@@ -127,7 +127,7 @@ while( row ~= -1 )
        %for(n_beam=1:N_beams),
           fprintf(fidout, '\n'  );
           fprintf(fidout, ['&Beam' '\n']  );
-          fprintf(fidout, [' BEAM_EVOLUTION = .true.' '\n']  );
+          fprintf(fidout, [' BEAM_EVOLUTION = ' input_struct.comp.evolution '\n']  );
           fprintf(fidout, [' MIN_BEAM_PARTICLE = 8' '\n']  );
           fprintf(fidout, [' NPX =  ' num2str(2^7) ', NPY = ' num2str(2^7) ', NPZ = ' num2str(2^8) '\n']);
           fprintf(fidout, [' Charge = ' num2str(input_struct.beam.charge, '%.1f') '\n']  );
@@ -144,11 +144,15 @@ while( row ~= -1 )
           qp_num_part_str = strrep(qp_num_part_str,'E+','E');
           fprintf(fidout, [' Num_Particle = ' qp_num_part_str ',' '\n']);
           fprintf(fidout, [' VDX =   0.0, VDY =   0.0, VDZ =  0.0' '\n']  );
-          fprintf(fidout, [' Init_Routine = 1' '\n']  );
+          fprintf(fidout, [' Init_Routine = ' num2str(input_struct.Init_Routine) '\n']  );
           fprintf(fidout, [' BEAM_PROFILE = ''test.hdf''' '\n']  );
           fprintf(fidout, [' QUIET_START = .true.' '\n']  );
-          fprintf(fidout, [' Parameter_Array(1:1,1:3) = ' num2str(input_struct.pos.X_center, '%.2f') ',' num2str(input_struct.pos.Y_center, '%.2f')  ',' num2str(input_struct.pos.Z_center, '%.2f') '\n']);
-          fprintf(fidout, [' Parameter_Array(2:2,1:3) = ' num2str(input_struct.beam.sigma_x, '%.2f') ',' num2str(input_struct.beam.sigma_y, '%.2f')  ',' num2str(input_struct.beam.sigma_z, '%.2f') '\n']);
+          fprintf(fidout, [' Parameter_Array(1:1,1:3) = ' num2str(input_struct.pos.X_center, '%.4f') ',' num2str(input_struct.pos.Y_center, '%.4f')  ',' num2str(input_struct.pos.Z_center, '%.4f') '\n']);
+          if input_struct.Init_Routine == 1
+          fprintf(fidout, [' Parameter_Array(2:2,1:3) = ' num2str(input_struct.beam.sigma_x, '%.4f') ',' num2str(input_struct.beam.sigma_y, '%.4f')  ',' num2str(input_struct.beam.sigma_z, '%.4f') '\n']);
+          elseif input_struct.Init_Routine == 5
+          fprintf(fidout, [' Parameter_Array(2:2,1:5) = ' num2str(input_struct.beam.alpha_x, '%.4f') ',' num2str(input_struct.beam.beta_x, '%.4f')  ',' num2str(input_struct.beam.alpha_y, '%.4f') ',' num2str(input_struct.beam.beta_y, '%.4f')  ',' num2str(input_struct.beam.sigma_z, '%.4f') '\n']);
+          end
           fprintf(fidout, [' Parameter_Array(3:3,1:3) = ' num2str(input_struct.beam.emit_x, '%.3f') ',' num2str(input_struct.beam.emit_y, '%.3f') ',' num2str(0., '%.3f')  '\n'] );
           fprintf(fidout, [' Parameter_Array(4:4,1:3) = ' num2str(0., '%.3f') ',' num2str(-0., '%.3f') ',' num2str(0., '%.3f')  '\n'] );
           fprintf(fidout, [' Parameter_Array(5:5,1:3) = ' num2str(0., '%.3f') ',' num2str(-0., '%.3f') ',' num2str(0., '%.3f')  '\n'] );
@@ -157,7 +161,7 @@ while( row ~= -1 )
           fprintf(fidout, [' Shifter_Parameter(1:1,1:4) = 0.,0.,1.5,0.' '\n']  );
           fprintf(fidout, [' Shifter_Parameter(2:2,1:4) = 0.,0.,0.,0.' '\n']  );
           fprintf(fidout, [' Shifter_Parameter(3:3,1:4) = 0.,78.,155.1,155.2' '\n']  );
-          fprintf(fidout, [' Use_Destroyer = .true.' '\n']  );
+          fprintf(fidout, [' Use_Destroyer = .' input_struct.sim.Use_Destroyer '.' '\n']  );
           fprintf(fidout, [' Destroyer_NCriteria = 5' '\n']  );
           fprintf(fidout, [' Destroyer_Criteria(1:1,1:5)=1,1,2,2,6' '\n']  );
           fprintf(fidout, [' Destroyer_Criteria(2:2,1:5)=0,' num2str(input_struct.size.Box_X-2, '%.0f') ',0,' num2str(input_struct.size.Box_Y-2, '%.0f')  ',0' '\n']);
@@ -199,22 +203,27 @@ while( row ~= -1 )
           if input_struct.plasma.profile == 0
               fprintf(fidout, ' Profile_type=0 \n' );
           elseif input_struct.plasma.profile == 1
-              fprintf(fidout, ' Profile_type=21 \n' );
+              %fprintf(fidout, ' Profile_type=21 \n' );
+              fprintf(fidout, ' Profile_type=18 \n' );
           end
-      elseif( ~isempty(strfind(row, 'Prof_Nsec') ) && section_species == 1)
-          fprintf(fidout, [' Prof_Nsec = ' num2str( input_struct.plasma.n_point) '\n'] );
-      elseif( ~isempty(strfind(row, 'Prof_Parameter(1,') ) && section_species == 1)
-          fprintf(fidout, [' Prof_Parameter(1,1:' num2str(input_struct.plasma.n_point) ') = '] );
-          for i=1:(input_struct.plasma.n_point-1)
-              fprintf(fidout, [num2str(input_struct.plasma.n(i),'%.2f') ',']);
-          end
-          fprintf(fidout,[num2str(input_struct.plasma.n(input_struct.plasma.n_point),'%.2f') '\n']);
-      elseif( ~isempty(strfind(row, 'Prof_Parameter(2,') ) && section_species == 1)
-          fprintf(fidout, [' Prof_Parameter(2,1:' num2str(input_struct.plasma.n_point) ') = '] );
-          for i=1:(input_struct.plasma.n_point-1)
-              fprintf(fidout, [num2str(input_struct.plasma.r(i),'%.2f') ',']);
-          end
-          fprintf(fidout,[num2str(input_struct.plasma.r(input_struct.plasma.n_point),'%.2f') '\n']);
+      elseif( ~isempty(strfind(row, 'argx1') ) && section_species == 1)
+	  fprintf(fidout, [' argx1=' num2str(input_struct.plasma.radius, '%.2f') '\n'] );
+      elseif( ~isempty(strfind(row, 'argx2') ) && section_species == 1)
+          fprintf(fidout, [' argx2=1' '\n'] );
+      %elseif( ~isempty(strfind(row, 'Prof_Nsec') ) && section_species == 1)
+      %    fprintf(fidout, [' Prof_Nsec = ' num2str( input_struct.plasma.n_point) '\n'] );
+      %elseif( ~isempty(strfind(row, 'Prof_Parameter(1,') ) && section_species == 1)
+      %    fprintf(fidout, [' Prof_Parameter(1,1:' num2str(input_struct.plasma.n_point) ') = '] );
+      %    for i=1:(input_struct.plasma.n_point-1)
+      %        fprintf(fidout, [num2str(input_struct.plasma.n(i),'%.2f') ',']);
+      %    end
+      %    fprintf(fidout,[num2str(input_struct.plasma.n(input_struct.plasma.n_point),'%.2f') '\n']);
+      %elseif( ~isempty(strfind(row, 'Prof_Parameter(2,') ) && section_species == 1)
+      %    fprintf(fidout, [' Prof_Parameter(2,1:' num2str(input_struct.plasma.n_point) ') = '] );
+      %    for i=1:(input_struct.plasma.n_point-1)
+      %        fprintf(fidout, [num2str(input_struct.plasma.r(i),'%.2f') ',']);
+      %    end
+      %    fprintf(fidout,[num2str(input_struct.plasma.r(input_struct.plasma.n_point),'%.2f') '\n']);
 
       % NEUTRAL SECTION
       elseif( ~isempty(strfind(row, 'Neutral_gas') ) && section_neutral == 1)
