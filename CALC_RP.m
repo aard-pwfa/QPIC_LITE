@@ -196,6 +196,11 @@ if param_struct.plasma.profile == 1
         %exp(-(param_struct.plasma.r - param_struct.plasma.radius).^2/(2*param_struct.plasma.width^2)); % radial density
     param_struct.plasma.n = exp(-(param_struct.plasma.r - param_struct.plasma.radius).^2/(2*param_struct.plasma.width^2));
     %param_struct.plasma.n = param_struct.plasma.n .* (param_struct.plasma.n > 1);
+else
+param_struct.plasma.n_point = 9;
+param_struct.plasma.n = [0.1,0.1,1,1,0.05,0.05,1,1,0];
+param_struct.plasma.r = [0,20,20.1,40,40.1,60,60.1,90,95];
+
 end
 
 %%%%%%%%%%%%%%%%%%%
