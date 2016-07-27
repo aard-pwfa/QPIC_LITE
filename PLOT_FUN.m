@@ -1,9 +1,9 @@
-function plot_obj = PLOT_FUN(data_type,data_dim,data,x_axis,y_axis,plot_units,file_number,param_struct,plot_dir,save_plot,save_ext,figure_num)
+function plot_obj = PLOT_FUN(data_type,data_dim,data,x_axis,y_axis,z_axis,cmap,plot_units,file_number,param_struct,plot_dir,save_plot,save_ext,figure_num)
 
 num_str = num2str(file_number,'%04d');
 
-cmap = custom_cmap;
-colormap(cmap.wbgyr);
+%cmap = custom_cmap;
+
 
 %%%%%%%%%%%
 % Density %
@@ -12,7 +12,8 @@ colormap(cmap.wbgyr);
 if strncmp(data_type,'QE',2)
     
     if strcmp(data_type(3),'B')
-        particle = 'Beam';
+        %particle = 'Beam';
+        particle = 'Charge';
     elseif strcmp(data_type(3),'P')
         particle = 'Plasma';
     end
@@ -41,19 +42,27 @@ if strncmp(data_type,'QE',2)
         rho = rho*param_struct.plasma.density;
         
     end
-        
+    
     figure(figure_num);
-    imagesc(ZZ,XX,-rho);
-    xlabel(x_label,'fontsize',16);
-    ylabel(y_label,'fontsize',16);
-    caxis([0 0.1*max(-rho(:))]);
-    colorbar;
-    t = colorbar('peer',gca);
-    set(get(t,'ylabel'),'String',c_label,'fontsize',16);
-    title([particle ' Density'],'fontsize',16);
+
+    if data_dim == 1
+        plot(ZZ,rho(size(rho,1)/2,:)); axis([min(ZZ) max(ZZ) z_axis(1) z_axis(2)]);
+        xlabel(x_label,'fontsize',16);
+        ylabel(c_label,'fontsize',16);
+        title(particle,'fontsize',16);
+    elseif data_dim == 2
+        imagesc(ZZ,XX,rho); colormap(cmap);
+        xlabel(x_label,'fontsize',16);
+        ylabel(y_label,'fontsize',16);
+        colorbar; caxis([z_axis(1) z_axis(2)]);
+        t = colorbar('peer',gca);
+        set(get(t,'ylabel'),'String',c_label,'fontsize',16);
+        title([particle ' Density'],'fontsize',16);
+    end
+    
     
     if save_plot
-        saveas(gca,[plot_dir particle '_rho_' num_str save_ext]);
+        saveas(gca,[plot_dir particle '_rho' num2str(data_dim) '_' num_str save_ext]);
     end
     
 end
@@ -99,8 +108,8 @@ if strncmp(data_type,'F',1)
         c_label = 'GV/m';
         
         % Create axes
-        ZZ = linspace(x_axis(1),x_axis(2),size(field,1))*param_struct.plasma.SD;
-        XX = linspace(y_axis(1),y_axis(2),size(field,2))*param_struct.plasma.SD;
+        ZZ = linspace(x_axis(1),x_axis(2),size(field,2))*param_struct.plasma.SD;
+        XX = linspace(y_axis(1),y_axis(2),size(field,1))*param_struct.plasma.SD;
         field = field*param_struct.plasma.field;
         
     end
@@ -108,12 +117,12 @@ if strncmp(data_type,'F',1)
     figure(figure_num);
     
     if data_dim == 1
-        plot(ZZ,field(size(field,1)/2,:));
+        plot(ZZ,field(size(field,1)/2,:));  axis([min(ZZ) max(ZZ) z_axis(1) z_axis(2)]);
         xlabel(x_label,'fontsize',16);
         ylabel(c_label,'fontsize',16);
         title(comp,'fontsize',16);
     elseif data_dim == 2
-        imagesc(ZZ,XX,field);
+        imagesc(ZZ,XX,field); colormap(cmap); caxis([z_axis(1) z_axis(2)]);%colormap(cmap.wbgyr);
         xlabel(x_label,'fontsize',16);
         ylabel(y_label,'fontsize',16);
         colorbar;
@@ -123,7 +132,7 @@ if strncmp(data_type,'F',1)
     end
     
     if save_plot
-        saveas(gca,[plot_dir comp '_field_' num_str save_ext]);
+        saveas(gca,[plot_dir comp '_field' num2str(data_dim) '_' num_str save_ext]);
     end
     
 end

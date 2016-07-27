@@ -1,7 +1,8 @@
-function beam = LOAD_BEAM(data_dir,file_number)
+function beam = LOAD_BEAM(data_dir,file_number,beam_number)
 
 num_str = num2str(file_number,'%04d');
-file    = [data_dir '/RAW-BEAM/01/RAW-BEAM-01_' num_str '.h5'];
+beam_str= num2str(beam_number,'%02d');
+file    = [data_dir '/RAW-BEAM/' beam_str '/RAW-BEAM-' beam_str '_' num_str '.h5'];
 
 x = h5read(file,'/x1');
 y = h5read(file,'/x2');
