@@ -1,141 +1,121 @@
-function plot_obj = PLOT_FUN(data_type,data_dim,data,x_axis,y_axis,z_axis,cmap,plot_units,file_number,param_struct,plot_dir,save_plot,save_ext,figure_num)
+function [fig_num,plot_data,pAx1,pAx2] = PLOT_FUN(data_type,data,data_dim,data_dir,cmap,file_number,param_struct,plot_dir,save_plot,save_ext,figure_num)
 
 num_str = num2str(file_number,'%04d');
 
-%cmap = custom_cmap;
-
-
-%%%%%%%%%%%
-% Density %
-%%%%%%%%%%%
-
-if strncmp(data_type,'QE',2)
-    
-    if strcmp(data_type(3),'B')
-        %particle = 'Beam';
-        particle = 'Charge';
-    elseif strcmp(data_type(3),'P')
-        particle = 'Plasma';
+if data_type(1)=='F'
+    tag = data_type(2);
+    vec = data_type(3);
+    slice = data_type(5:6);
+    if tag=='W'; data_type(2) = 'E'; end;
+    [axis1, axis2] = LOAD_AXIS(data_dir, data_type, file_number);
+    %data = LOAD_DATA(data_dir, data_type, file_number);
+    if strcmp(slice,'XY'); data = data'; slice = 'YX'; end;
+    if slice(1) ~= 'Z'
+        axis1 = axis1 - mean(axis1);
+    elseif slice(2) ~= 'Z'
+        axis2 = axis2 - mean(axis2);
     end
     
-    rho = data;
-    
-    if strcmp(plot_units,'natural')
-        
-        x_label = 'c/\omega_p';
-        y_label = 'c/\omega_p';
-        c_label = 'n_0';
-        
-        % Create axes
-        ZZ = linspace(x_axis(1),x_axis(2),size(rho,1));
-        XX = linspace(y_axis(1),y_axis(2),size(rho,2));
-        
-    elseif strcmp(plot_units,'real')
-        
-        x_label = '\mu m';
-        y_label = '\mu m';
-        c_label = 'cm^{-3}';
-        
-        % Create axes
-        ZZ = linspace(x_axis(1),x_axis(2),size(rho,1))*param_struct.plasma.SD;
-        XX = linspace(y_axis(1),y_axis(2),size(rho,2))*param_struct.plasma.SD;
-        rho = rho*param_struct.plasma.density;
-        
-    end
+    ax1 = linspace(axis1(1),axis1(2),size(data,1))*param_struct.plasma.SD;
+    ax2 = linspace(axis2(1),axis2(2),size(data,2))*param_struct.plasma.SD;
     
     figure(figure_num);
-
     if data_dim == 1
-        plot(ZZ,rho(size(rho,1)/2,:)); axis([min(ZZ) max(ZZ) z_axis(1) z_axis(2)]);
-        xlabel(x_label,'fontsize',16);
-        ylabel(c_label,'fontsize',16);
-        title(particle,'fontsize',16);
+        plot_data = param_struct.plasma.field*data(size(data,1)/2,:);
+        pAx1 = ax2;
+        plot(pAx1,plot_data,'k','linewidth',3); axis tight;
+        if slice(2)=='Z'; set(gca,'xdir','reverse'); end;
+        xlabel([slice(2) ' [\mum]']);
+        if tag=='E'; ylabel([ tag '_{' vec '} [GV/m]']); end;
+        if tag=='B'; ylabel([ tag '_{' vec '} [MT/m]']); end;
+        if tag=='W'; ylabel([ tag '_{' vec '} [MT/m]']); end;
     elseif data_dim == 2
-        imagesc(ZZ,XX,rho); colormap(cmap);
-        xlabel(x_label,'fontsize',16);
-        ylabel(y_label,'fontsize',16);
-        colorbar; caxis([z_axis(1) z_axis(2)]);
-        t = colorbar('peer',gca);
-        set(get(t,'ylabel'),'String',c_label,'fontsize',16);
-        title([particle ' Density'],'fontsize',16);
+        plot_data = param_struct.plasma.field*data(:,size(data,2)/2);
+        pAx1 = ax1;
+        plot(pAx1,plot_data,'k','linewidth',3); axis tight;
+        if slice(1)=='Z'; set(gca,'xdir','reverse'); end;
+        xlabel([slice(1) ' [\mum]']);
+        if tag=='E'; ylabel([ tag '_{' vec '} [GV/m]']); end;
+        if tag=='B'; ylabel([ tag '_{' vec '} [MT/m]']); end;
+        if tag=='W'; ylabel([ tag '_{' vec '} [MT/m]']); end;
+    elseif data_dim == 3
+        plot_data = param_struct.plasma.field*data;
+        pAx1 = ax2;
+        pAx2 = ax1;
+        imagesc(pAx1,pAx2,plot_data); colormap(cmap);
+        axis xy; 
+        if slice(2) == 'Z'; set(gca,'xdir','reverse'); end;
+        xlabel([slice(2) ' [\mum]']);
+        ylabel([slice(1) ' [\mum]']);
+        h=colorbar('northoutside'); 
+        if tag=='E'; ylabel(h,[ tag '_{' vec '} [GV/m]']); end;
+        if tag=='B'; ylabel(h,[ tag '_{' vec '} [MT/m]']); end;
+        if tag=='W'; ylabel(h,[ tag '_{' vec '} [MT/m]']); end;
+        val = max(abs(plot_data(:)));
+        caxis([-val val]);
+    end
+    %title([ tag '_{' vec '}']);
+    set(gca,'fontsize',24);
+    
+    if save_plot
+        saveas(gca,[plot_dir tag '_' vec '_' slice num2str(data_dim) '_' num_str save_ext]);
     end
     
     
+elseif data_type(1)=='Q'
+    tag = data_type(3);
+    slice = data_type((end-1):end);
+    if tag=='T'; data_type(3) = 'B'; end;
+    [axis1, axis2] = LOAD_AXIS(data_dir, data_type, file_number);
+    %data = LOAD_DATA(data_dir, data_type, file_number);
+    if strcmp(slice,'XY'); data = data'; slice = 'YX'; end;
+    if slice(1) ~= 'Z'
+        axis1 = axis1 - mean(axis1);
+    elseif slice(2) ~= 'Z'
+        axis2 = axis2 - mean(axis2);
+    end
+    
+    ax1 = linspace(axis1(1),axis1(2),size(data,1))*param_struct.plasma.SD;
+    ax2 = linspace(axis2(1),axis2(2),size(data,2))*param_struct.plasma.SD;
+    figure(figure_num);
+    if data_dim == 1
+        plot_data = data(size(data,1)/2,:);
+        pAx1 = ax2;
+        plot(pAx1,plot_data,'k','linewidth',3); axis tight;
+        if slice(2)=='Z'; set(gca,'xdir','reverse'); end;
+        xlabel([slice(2) ' [\mum]']);
+        ylabel(['n_{' tag '} [' num2str(param_struct.plasma.density,'%0.1E') ' cm^{-3}]']);
+        
+    elseif data_dim == 2
+        plot_data = data(:,size(data,2)/2);
+        pAx1 = ax1;
+        plot(pAx1,plot_data,'k','linewidth',3); axis tight;
+        if slice(1)=='Z'; set(gca,'xdir','reverse'); end;
+        xlabel([slice(1) ' [\mum]']);
+        ylabel(['n_{' tag '} [' num2str(param_struct.plasma.density,'%0.1E') ' cm^{-3}]']);
+
+    elseif data_dim == 3
+        plot_data = data;
+        pAx1 = ax2;
+        pAx2 = ax1;
+        imagesc(pAx1,pAx2,plot_data); colormap(cmap);
+        axis xy;
+        if slice(2) == 'Z'; set(gca,'xdir','reverse'); end;
+        xlabel([slice(2) ' [\mum]']);
+        ylabel([slice(1) ' [\mum]']);
+        h=colorbar('northoutside'); 
+        ylabel(h,['n_{' tag '} [' num2str(param_struct.plasma.density,'%0.1E') ' cm^{-3}]']);
+        caxis([-1 1]);
+    end
+    %if tag == 'B'; title('Beam Density'); end;
+    %if tag == 'P'; title('Plasma Density'); end;
+    %if tag == 'T'; title('Total Density'); end;
+    set(gca,'fontsize',24);
+    
     if save_plot
-        saveas(gca,[plot_dir particle '_rho' num2str(data_dim) '_' num_str save_ext]);
+        saveas(gca,[plot_dir tag '_rho' '_' slice num2str(data_dim) '_' num_str save_ext]);
     end
     
 end
 
-
-
-%%%%%%%%%%
-% Fields %
-%%%%%%%%%%
-
-if strncmp(data_type,'F',1)
-    
-    if strcmp(data_type(2:3),'BX')
-        comp = 'B_x';
-    elseif strcmp(data_type(2:3),'BY')
-        comp = 'B_y';
-    elseif strcmp(data_type(2:3),'BZ')
-        comp = 'B_z';
-    elseif strcmp(data_type(2:3),'EX')
-        comp = 'E_x';
-    elseif strcmp(data_type(2:3),'EY')
-        comp = 'E_y';
-    elseif strcmp(data_type(2:3),'EZ')
-        comp = 'E_z';
-    end
-    
-    field = data;
-    
-    if strcmp(plot_units,'natural')
-        
-        x_label = 'c/\omega_p';
-        y_label = 'c/\omega_p';
-        c_label = 'm c \omega_p / e';
-        
-        % Create axes
-        ZZ = linspace(x_axis(1),x_axis(2),size(field,2));
-        XX = linspace(y_axis(1),y_axis(2),size(field,1));
-        
-    elseif strcmp(plot_units,'real')
-        
-        x_label = '\mu m';
-        y_label = '\mu m';
-        c_label = 'GV/m';
-        
-        % Create axes
-        ZZ = linspace(x_axis(1),x_axis(2),size(field,2))*param_struct.plasma.SD;
-        XX = linspace(y_axis(1),y_axis(2),size(field,1))*param_struct.plasma.SD;
-        field = field*param_struct.plasma.field;
-        
-    end
-    
-    figure(figure_num);
-    
-    if data_dim == 1
-        plot(ZZ,field(size(field,1)/2,:));  axis([min(ZZ) max(ZZ) z_axis(1) z_axis(2)]);
-        xlabel(x_label,'fontsize',16);
-        ylabel(c_label,'fontsize',16);
-        title(comp,'fontsize',16);
-    elseif data_dim == 2
-        imagesc(ZZ,XX,field); colormap(cmap); caxis([z_axis(1) z_axis(2)]);%colormap(cmap.wbgyr);
-        xlabel(x_label,'fontsize',16);
-        ylabel(y_label,'fontsize',16);
-        colorbar;
-        t = colorbar('peer',gca);
-        set(get(t,'ylabel'),'String',c_label,'fontsize',16);
-        title(comp,'fontsize',16);
-    end
-    
-    if save_plot
-        saveas(gca,[plot_dir comp '_field' num2str(data_dim) '_' num_str save_ext]);
-    end
-    
-end
-
-plot_obj = gca;
-
+fig_num = gca;

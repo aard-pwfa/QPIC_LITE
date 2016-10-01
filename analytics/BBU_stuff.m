@@ -8,14 +8,17 @@ kp = omega_p/SI_c;
 
 % load geometric parameters
 r_in = 240E-6;
+r_out = 290E-6;
+
 R_in = kp*r_in;
+R_out = kp*r_in;
 K1=besselk(1,R_in);
 K2=besselk(2,R_in);
 kap1 = kp^2*(K1/(R_in*K2))*(1+R_in*K1/(4*K2))^(-1);
 
 % beam parameters
 gamma = 39824;
-sig_z = 40e-6;
+sig_z = 35e-6;
 N = 5.34e9;
 I = N*SI_e*SI_c/sig_z;
 
